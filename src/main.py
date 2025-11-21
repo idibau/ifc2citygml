@@ -1,36 +1,28 @@
-import ifcopenshell.geom
-from ifcopenshell.util.shape import get_faces, get_vertices
-import numpy as np
+import argparse
+import pathlib
+
 import ifcopenshell
 
-from utils.ifc_utils import get_building_recursive
-from utils.transformation_matrix import TransformationMatrix
+from core.ifc_to_gml import convert
 
 
-# Geometry settings
-settings = ifcopenshell.geom.settings()
-settings.set(settings.USE_WORLD_COORDS, True)
+def main():
+    parser = argparse.ArgumentParser(description="Convert IFC to GML")
+    parser.add_argument("input", type=pathlib.Path, help="Path to the input IFC file")
+    parser.add_argument("output", type=pathlib.Path, help="Path to the output GML file")
+    args = parser.parse_args()
 
-# Load IFC and get a product
-model = ifcopenshell.open("/workspace/src/model_with_origin_50.ifc")
+    print(f"Reading file: {args.input}")
+    model = ifcopenshell.open(str(args.input))
+
+    print("Converting...")
+    document = convert(model, args.input.stem)
+
+    print(f"Writing GML: {args.output}")
+    document.write(str(args.output))
+
+    print("Done")
 
 
-product = model.by_type("IfcWall")[0]
-
-building = get_building_recursive(product)
-
-# Generate the geometry
-shape = ifcopenshell.geom.create_shape(settings, product)
-occ_shape = shape.geometry
-
-# Extract raw vertices and faces
-vertices = np.array(get_vertices(occ_shape))
-faces = np.array(get_faces(occ_shape))
-
-matrix = TransformationMatrix(product)
-
-verts_world = matrix.apply_transformation(vertices)
-
-print("Vertices (world coordinates):")
-print(verts_world[:5])
-print("Faces:", faces.shape)
+if __name__ == "__main__":
+    main()

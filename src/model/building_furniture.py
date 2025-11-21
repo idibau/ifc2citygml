@@ -1,4 +1,4 @@
-from ifc2gml.gml.base_feature import BaseFeature
+from model.base_feature import BaseFeature
 
 
 class BuildingFurniture(BaseFeature):

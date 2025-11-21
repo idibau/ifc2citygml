@@ -1,8 +1,0 @@
-services:
-
-  develop:
-    container_name: 3d_gis_bim_dev
-    image: python:3.12
-    command: sleep infinity
-    volumes:
-      - .:/workspace:cached

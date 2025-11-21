@@ -2,25 +2,20 @@ import ifcopenshell.geom
 import numpy as np
 from ifcopenshell.util.shape import get_faces, get_vertices
 
-from ifc2gml.gml.building_constructive_element import BuildingConstructiveElement
-from ifc2gml.gml.building_installation import BuildingInstallation
-from ifc2gml.gml.document import Document
-from ifc2gml.gml.filling import Filling
-from ifc2gml.gml.lod import Lod
-from ifc2gml.gml.solid import Solid
-from ifc2gml.ifc_mapper import map_ifc_entity
+from model.building_constructive_element import BuildingConstructiveElement
+from model.document import Document
+from model.filling import Filling
+from model.lod import Lod
+from model.solid import Solid
+from utils.ifc_mapper import map_ifc_entity
 from utils.ifc_utils import get_building_recursive, get_opening_element
 from utils.transformation_matrix import TransformationMatrix
 
 settings = ifcopenshell.geom.settings()
 settings.set(settings.USE_WORLD_COORDS, True)
 
-print("Reading file")
 
-
-def run(file_name):
-    model = ifcopenshell.open(f"/workspace/input/{file_name}.ifc")
-
+def convert(model, name):
     buildings_by_global_id = {}
     city_objects_by_global_id = {}
     fillings_to_openings = {}
@@ -87,17 +82,8 @@ def run(file_name):
         else:
             print("Could not add filling element")
 
-    document = Document("Test")
+    document = Document(name)
     for building_features in buildings_by_global_id.values():
         document.add_building(building_features)
 
-    document.write(f"/workspace/output/ifc2gml_new_{file_name}.gml")
-
-
-# for file in os.listdir("/workspace/input"):
-#     file_name = file.replace(".ifc", "")
-#     run(file_name)
-
-run("0114-B+P-AR-HAUS_A-M3-01")
-
-print("done")
+    return document
