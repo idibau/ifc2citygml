@@ -86,7 +86,6 @@ def get_building_recursive(ifc_product, visited=None):
     return None
 
 
-
 def get_opening_element(ifc_element):
     fills = ifc_element.FillsVoids
     if not fills:
