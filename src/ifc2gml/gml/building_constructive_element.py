@@ -1,16 +1,12 @@
-from ifc2gml.gml.city_object_element import CityObjectElement
-from ifc2gml.gml.gml_utils import get_solid, create_sub_element
+from ifc2gml.gml.base_feature import BaseFeature
+from ifc2gml.gml.gml_utils import create_sub_element
 
-
-class BuildingConstructiveElement(CityObjectElement):
-    def __init__(self, class_value):
+class BuildingConstructiveElement(BaseFeature):
+    def __init__(self, ifc_entity, predefined_type):
         super().__init__("bldg", "BuildingConstructiveElement")
-        class_element = create_sub_element(self.element, "bldg", "class")
-        class_element.text = class_value
 
-    def add_solid(self, vertices, faces, lod):
-        solid = get_solid(vertices, faces, lod)
-        self.element.append(solid)
+    def add_solid(self, solid):
+        self.element.append(solid.element)
 
     def add_filling(self, filling):
         parent = create_sub_element(self.element, "con", "filling")

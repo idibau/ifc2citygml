@@ -3,12 +3,12 @@ import numpy as np
 from ifcopenshell.util.shape import get_faces, get_vertices
 
 from ifc2gml.gml.building_constructive_element import BuildingConstructiveElement
+from ifc2gml.gml.building_installation import BuildingInstallation
 from ifc2gml.gml.document import Document
 from ifc2gml.gml.filling import Filling
-from ifc2gml.gml.filling_surface import FillingSurface
 from ifc2gml.gml.lod import Lod
-from ifc2gml.gml.surface import Surface
-from ifc2gml.ifc_to_gml_mapper import map_ifc_entity_to_surface
+from ifc2gml.gml.solid import Solid
+from ifc2gml.ifc_mapper import map_ifc_entity
 from utils.ifc_utils import get_building_recursive, get_opening_element
 from utils.transformation_matrix import TransformationMatrix
 
@@ -57,10 +57,10 @@ def run(file_name):
 
             # absolute_vertices -= center
 
-            city_object = map_ifc_entity_to_surface(entity, predefined_type)
-            if city_object:
+            base_feature = map_ifc_entity(entity, predefined_type)
+            if base_feature:
                 global_id = getattr(ifc_product, "GlobalId")
-                if isinstance(city_object, Filling) or isinstance(city_object, FillingSurface):
+                if isinstance(base_feature, Filling):
                     opening_element = get_opening_element(ifc_product)
                     if opening_element:
                         fillings_to_openings[global_id] = getattr(opening_element, "GlobalId")
@@ -71,10 +71,11 @@ def run(file_name):
                     building_global_id = getattr(ifc_building, "GlobalId")
                     if building_global_id not in buildings_by_global_id:
                         buildings_by_global_id[building_global_id] = []
-                    buildings_by_global_id[building_global_id].append(city_object)
+                    buildings_by_global_id[building_global_id].append(base_feature)
 
-                city_object.add_multi_surface(absolute_vertices, faces, Lod.LOD_3)
-                city_objects_by_global_id[global_id] = city_object
+                solid = Solid(Lod.LOD_3, absolute_vertices, faces)
+                base_feature.add_solid(solid)
+                city_objects_by_global_id[global_id] = base_feature
             else:
                 print("Could not retrieve GML entity")
 
@@ -83,16 +84,14 @@ def run(file_name):
         opening = city_objects_by_global_id.get(opening_gid, None)
         if isinstance(filling, Filling) and isinstance(opening, BuildingConstructiveElement):
             opening.add_filling(filling)
-        elif isinstance(filling, FillingSurface) and isinstance(opening, Surface):
-            opening.add_filling_surface(filling)
         else:
             print("Could not add filling element")
 
-    gml_document = Document("Test")
-    for gml_elements in buildings_by_global_id.values():
-        gml_document.add_city_object_member(gml_elements)
+    document = Document("Test")
+    for building_features in buildings_by_global_id.values():
+        document.add_building(building_features)
 
-    gml_document.write(f"/workspace/output/ifc2gml_surface_non_centered_{file_name}.gml")
+    document.write(f"/workspace/output/ifc2gml_new_{file_name}.gml")
 
 
 # for file in os.listdir("/workspace/input"):

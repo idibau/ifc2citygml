@@ -1,17 +1,39 @@
-from ifc2gml.gml.city_object_element import CityObjectElement
+from ifc2gml.gml.base_feature import BaseFeature
+from ifc2gml.gml.building_constructive_element import BuildingConstructiveElement
+from ifc2gml.gml.building_furniture import BuildingFurniture
+from ifc2gml.gml.building_installation import BuildingInstallation
+from ifc2gml.gml.building_room import BuildingRoom
 from ifc2gml.gml.gml_utils import create_sub_element
 
 
-class Building(CityObjectElement):
+class Building(BaseFeature):
     def __init__(self):
         super().__init__("bldg", "Building")
+
+    def add_building_feature(self, base_feature):
+        if isinstance(base_feature, BuildingConstructiveElement):
+            self.add_building_constructive_element(base_feature)
+        elif isinstance(base_feature, BuildingInstallation):
+            self.add_building_installation(base_feature)
+        elif isinstance(base_feature, BuildingRoom):
+            self.add_building_room(base_feature)
+        elif isinstance(base_feature, BuildingFurniture):
+            self.add_building_furniture(base_feature)
+        else:
+            print(f"Could not add building feature of type {type(base_feature).__name__} to building.")
 
     def add_building_constructive_element(self, building_constructive_element):
         parent = create_sub_element(self.element, "bldg", "buildingConstructiveElement")
         parent.append(building_constructive_element.element)
 
-    def add_surface(self, surface):
-        parent = create_sub_element(self.element, "core", "boundary")
-        parent.append(surface.element)
+    def add_building_installation(self, building_installation):
+        parent = create_sub_element(self.element, "bldg", "buildingInstallation")
+        parent.append(building_installation.element)
 
+    def add_building_room(self, building_room):
+        parent = create_sub_element(self.element, "bldg", "buildingRoom")
+        parent.append(building_room.element)
 
+    def add_building_furniture(self, building_furniture):
+        parent = create_sub_element(self.element, "bldg", "buildingFurniture")
+        parent.append(building_furniture.element)

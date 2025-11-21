@@ -1,7 +1,7 @@
 from ifc2gml.gml.gml_utils import get_uuid_as_string, create_element, create_tag_with_namespace
 
 
-class CityObjectElement:
+class BaseFeature:
 
     def __init__(self, namespace, tag):
         self.element = create_element(namespace, tag)

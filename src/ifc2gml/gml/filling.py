@@ -1,11 +1,9 @@
-from ifc2gml.gml.city_object_element import CityObjectElement
-from ifc2gml.gml.gml_utils import get_solid
+from ifc2gml.gml.base_feature import BaseFeature
 
 
-class Filling(CityObjectElement):
-    def __init__(self, namespace, tag):
+class Filling(BaseFeature):
+    def __init__(self, namespace, tag,  ifc_entity, predefined_type):
         super().__init__(namespace, tag)
 
-    def add_solid(self, vertices, faces, lod):
-        solid = get_solid(vertices, faces, lod)
-        self.element.append(solid)
+    def add_solid(self, solid):
+        self.element.append(solid.element)
