@@ -1,7 +1,7 @@
 from lxml.etree import Element, ElementTree
 
 from model.building import Building
-from utils.gml_utils import create_tag_with_namespace, create_sub_element
+from utils.gml_utils import create_tag_with_namespace, create_sub_element, point_to_string
 from model.namespace import NS
 
 
@@ -11,6 +11,14 @@ class Document:
         self.root = Element(create_tag_with_namespace("core", "CityModel"), nsmap=NS)
         name_el = create_sub_element(self.root, "gml", "name")
         name_el.text = self.city_model_name
+
+    def add_envelope(self, min_corner, max_corner):
+        bounded_by = create_sub_element(self.root, "gml", "boundedBy")
+        envelope = create_sub_element(bounded_by, "gml", "Envelope")
+        lower_corner = create_sub_element(envelope, "gml", "lowerCorner")
+        lower_corner.text = point_to_string(min_corner)
+        upper_corner = create_sub_element(envelope, "gml", "upperCorner")
+        upper_corner.text = point_to_string(max_corner)
 
     def add_building(self, building_features):
         building = Building()

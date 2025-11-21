@@ -8,7 +8,11 @@ def get_uuid_as_string():
     return "uuid_" + str(uuid.uuid4())
 
 
-def face_to_closed_pos_list(vertices, face):
+def point_to_string(point):
+    return " ".join(map(str, point))
+
+
+def face_to_closed_pos_list_string(vertices, face):
     coords = []
     for idx in face:
         coords.extend(map(str, vertices[idx]))

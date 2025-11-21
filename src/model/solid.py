@@ -1,6 +1,6 @@
 from model.base_feature import BaseFeature
 from utils.gml_utils import create_sub_element, create_tag_with_namespace, get_uuid_as_string, \
-    face_to_closed_pos_list
+    face_to_closed_pos_list_string
 
 
 class Solid(BaseFeature):
@@ -16,5 +16,5 @@ class Solid(BaseFeature):
             exterior = create_sub_element(polygon, "gml", "exterior")
             linear_ring = create_sub_element(exterior, "gml", "LinearRing")
             pos_list = create_sub_element(linear_ring, "gml", "posList")
-            pos_list.text = face_to_closed_pos_list(vertices, face)
+            pos_list.text = face_to_closed_pos_list_string(vertices, face)
             pos_list.set("srsDimension", "3")

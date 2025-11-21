@@ -15,15 +15,33 @@ settings = ifcopenshell.geom.settings()
 settings.set(settings.USE_WORLD_COORDS, True)
 
 
-def convert(model, name):
+def convert(model, name, center_model=False):
     buildings_by_global_id = {}
     city_objects_by_global_id = {}
     fillings_to_openings = {}
 
-    center = None
-
     print("Process ifc products")
     ifc_products = model.by_type("IfcProduct")
+
+    all_points = []
+    for ifc_product in ifc_products:
+        try:
+            shape = ifcopenshell.geom.create_shape(settings, ifc_product)
+            vertices = np.array(shape.geometry.verts, dtype=np.float64)
+            vertices = vertices.reshape(-1, 3)
+            all_points.append(vertices)
+        except Exception:
+            pass
+
+    if len(all_points) == 0:
+        raise Exception("No geometries found in model")
+
+    all_points = np.vstack(all_points)
+    min_corner = all_points.min(axis=0)
+    max_corner = all_points.max(axis=0)
+    center = (min_corner + max_corner) / 2.0
+    print(f"Model center: {center}")
+
     for index, ifc_product in enumerate(ifc_products):
         print(f"Processing {ifc_product.GlobalId} ({index + 1}/{len(ifc_products)})")
         if not getattr(ifc_product, "Representation", None):
@@ -46,11 +64,8 @@ def convert(model, name):
             matrix = TransformationMatrix(ifc_product)
             absolute_vertices = matrix.apply_transformation(relative_vertices)
 
-            if center is None:
-                center = absolute_vertices.mean(axis=0)
-                print(center)
-
-            # absolute_vertices -= center
+            if center_model:
+                absolute_vertices -= center
 
             base_feature = map_ifc_entity(entity, predefined_type)
             if base_feature:
@@ -83,6 +98,7 @@ def convert(model, name):
             print("Could not add filling element")
 
     document = Document(name)
+    document.add_envelope(min_corner, max_corner)
     for building_features in buildings_by_global_id.values():
         document.add_building(building_features)
 
