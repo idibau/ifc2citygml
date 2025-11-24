@@ -5,6 +5,7 @@
   * [Project description](#project-description)
   * [Getting started](#getting-started)
   * [Getting started (Development)](#getting-started-development)
+  * [Mapping](#mapping)
 <!-- TOC -->
 
 ## Project description
