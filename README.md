@@ -49,7 +49,7 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 ## Mapping
 
-Die folgenden Ifc Entitäten werden bei der Konvertierung berücksichtigt. Vorraussetzung: Die Elemente sind einem Gebäude zugeordnet.
+The following Ifc entities are considered during the conversion. Prerequisite: The elements are assigned to a building.
 
     IfcBuildingStorey
     =================
