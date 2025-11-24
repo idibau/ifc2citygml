@@ -45,3 +45,53 @@ Install pip packages (Run in container at /workspace)
 ```console
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
+
+## Mapping
+
+Die folgenden Ifc Entitäten werden bei der Konvertierung berücksichtigt. Vorraussetzung: Die Elemente sind einem Gebäude zugeordnet.
+
+    IfcBuildingStorey
+    =================
+    Storey
+
+    BuildingConstructionElement    
+    ===========================
+    IfcBeam
+    IfcColumn
+    IfcFooting
+    IfcMember
+    IfcPlate
+    IfcWall
+    IfcWallStandardCase
+    IfcRoof
+    IfcCurtainWall
+    IfcSlab
+    IfcCovering
+
+    BuildingInstallation
+    ====================
+    IfcRailing
+    IfcRamp
+    IfcRampFlight
+    IfcStair
+    IfcStairFlight
+    IfcBuildingElementProxy
+    IfcBuildingElementComponent
+    IfcPile
+
+    BuildingRoom
+    ============
+    IfcSpace
+
+    
+    BuildingFurniture
+    =================
+    IfcFurnishingElement
+
+    Door
+    ====
+    IfcDoor
+
+    Window
+    ======
+    IfcWindow
