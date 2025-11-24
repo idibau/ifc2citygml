@@ -83,7 +83,6 @@ Die folgenden Ifc Entitäten werden bei der Konvertierung berücksichtigt. Vorra
     BuildingRoom
     ============
     IfcSpace
-
     
     BuildingFurniture
     =================
