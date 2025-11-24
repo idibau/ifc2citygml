@@ -1,9 +1,21 @@
 import argparse
+import logging
 import pathlib
+import sys
 
 import ifcopenshell
 
 from core.ifc_to_gml import convert
+
+logging_format = "%(asctime)s - %(filename)s:%(lineno)s - %(levelname)s - %(message)s"
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setFormatter(logging.Formatter(logging_format))
+
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+root_logger.addHandler(stream_handler)
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -17,16 +29,16 @@ def main():
     )
     args = parser.parse_args()
 
-    print(f"Reading file: {args.input}")
+    logger.info(f"Reading IFC: {args.input}")
     model = ifcopenshell.open(str(args.input))
 
-    print("Converting...")
+    logger.info("Converting")
     document = convert(model, args.input.stem, args.center_model)
 
-    print(f"Writing GML: {args.output}")
+    logger.info(f"Writing GML: {args.output}")
     document.write(str(args.output))
 
-    print("Done")
+    logger.info("Done")
 
 
 if __name__ == "__main__":

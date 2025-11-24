@@ -20,10 +20,12 @@ class Document:
         upper_corner = create_sub_element(envelope, "gml", "upperCorner")
         upper_corner.text = point_to_string(max_corner)
 
-    def add_building(self, building_features):
+    def add_building(self, storeys, building_features):
         building = Building()
         city_object_member = create_sub_element(self.root, "core", "cityObjectMember")
         city_object_member.append(building.element)
+        for storey in storeys:
+            building.add_storey(storey)
         for building_feature in building_features:
             building.add_building_feature(building_feature)
 

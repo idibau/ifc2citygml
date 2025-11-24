@@ -3,12 +3,10 @@ import numpy as np
 
 
 def get_local_matrix(placement):
-    """Return 4x4 local transform for a placement, or identity if unsupported."""
     return placement_util.get_local_placement(placement)
 
 
 def get_parent_placement(placement):
-    """Return the parent placement, handling Local and Linear placements."""
     if not placement:
         return None
     if placement.is_a("IfcLocalPlacement"):
@@ -20,69 +18,54 @@ def get_parent_placement(placement):
 
 
 def get_absolute_placement(placement):
-    """Traverse PlacementRelTo recursively to world coordinates."""
     mats = []
     while placement:
         mats.append(get_local_matrix(placement))
         placement = getattr(placement, "PlacementRelTo", None)
-
     total = np.eye(4)
     for m in reversed(mats):  # parent first
         total = total @ m
     return total
 
 
-def get_spatial_parent(product):
-    """Return the nearest spatial structure element containing the product."""
-    for rel in getattr(product, "ContainedInStructure", []) or []:
+def get_spatial_parent(ifc_element):
+    for rel in getattr(ifc_element, "ContainedInStructure", []) or []:
         if rel.is_a("IfcRelContainedInSpatialStructure"):
             return rel.RelatingStructure
     return None
 
 
-def get_building_recursive(ifc_product, visited=None):
-    """
-    Recursively find the IfcBuilding that contains this product,
-    traversing spatial structure and decomposition relations.
-    """
+def get_building(ifc_element):
+    return get_next_related_object_or_structure_of_type(ifc_element, "IfcBuilding")
+
+
+def get_building_storey(ifc_element):
+    return get_next_related_object_or_structure_of_type(ifc_element, "IfcBuildingStorey")
+
+
+def get_next_related_object_or_structure_of_type(ifc_element, ifc_entity, visited=None):
     if visited is None:
         visited = set()
-
-    # Use GlobalId if available, otherwise fallback to Python id
-    gid = getattr(ifc_product, "GlobalId", None) or id(ifc_product)
+    gid = getattr(ifc_element, "GlobalId", None)
     if gid in visited:
         return None
     visited.add(gid)
-
-    for rel in getattr(ifc_product, "ContainedInStructure", []) or []:
-        if not rel.is_a("IfcRelContainedInSpatialStructure"):
-            continue
+    for rel in getattr(ifc_element, "ContainedInStructure", []):
         parent = rel.RelatingStructure
-        if parent.is_a("IfcBuilding"):
+        if parent.is_a(ifc_entity):
             return parent
         if parent:
-            building = get_building_recursive(parent, visited)
+            building = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
             if building:
                 return building
-
-    for rel in getattr(ifc_product, "Decomposes", []) or []:
+    for rel in getattr(ifc_element, "Decomposes", []):
         parent = rel.RelatingObject
-        if parent.is_a("IfcBuilding"):
+        if parent.is_a(ifc_entity):
             return parent
         if parent:
-            building = get_building_recursive(parent, visited)
+            building = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
             if building:
                 return building
-
-    for rel in getattr(ifc_product, "ConnectedTo", []) or []:
-        parent = rel.RelatingElement
-        if parent.is_a("IfcBuilding"):
-            return parent
-        if parent:
-            building = get_building_recursive(parent, visited)
-            if building:
-                return building
-
     return None
 
 
@@ -90,12 +73,9 @@ def get_opening_element(ifc_element):
     fills = ifc_element.FillsVoids
     if not fills:
         return None
-
     opening = fills[0].RelatingOpeningElement
-
     voids = opening.VoidsElements
     if not voids:
         return None
-
-    host = voids[0].RelatingBuildingElement
-    return host
+    opening_element = voids[0].RelatingBuildingElement
+    return opening_element

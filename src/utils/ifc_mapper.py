@@ -30,13 +30,13 @@ def map_ifc_entity(ifc_type, predefined_type=None):
         "IfcBuildingElementProxy",
         "IfcBuildingElementComponent",
         "IfcPile",
-        "IfcFlowTerminal"
+        # "IfcFlowTerminal"
     }
 
     if ifc_type == "IfcSpace":
         return BuildingRoom(ifc_type, predefined_type)
-    if ifc_type == "IfcFurnishingElement":
-        return BuildingFurniture(ifc_type, predefined_type)
+    # if ifc_type == "IfcFurnishingElement":
+    #     return BuildingFurniture(ifc_type, predefined_type)
     if ifc_type == "IfcDoor":
         return Door(ifc_type, predefined_type)
     if ifc_type == "IfcWindow":
@@ -47,6 +47,4 @@ def map_ifc_entity(ifc_type, predefined_type=None):
 
     if ifc_type in installation_mapping:
         return BuildingInstallation(ifc_type, predefined_type)
-
-    print(f"Not supported ifc type: {ifc_type}.")
     return None

@@ -67,7 +67,6 @@ class TransformationMatrix:
             self.add_transformation(m)
 
     def add_object_placement_transformation(self, ifc_product):
-        """Combine placement chain: product + all spatial parents."""
         placement = getattr(ifc_product, "ObjectPlacement", None)
         m = get_absolute_placement(placement) if placement else np.eye(4)
         parent = get_spatial_parent(ifc_product)

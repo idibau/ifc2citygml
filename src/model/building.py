@@ -1,3 +1,5 @@
+import logging
+
 from model.base_feature import BaseFeature
 from model.building_constructive_element import BuildingConstructiveElement
 from model.building_furniture import BuildingFurniture
@@ -5,10 +7,16 @@ from model.building_installation import BuildingInstallation
 from model.building_room import BuildingRoom
 from utils.gml_utils import create_sub_element
 
+logger = logging.getLogger(__name__)
+
 
 class Building(BaseFeature):
     def __init__(self):
         super().__init__("bldg", "Building")
+
+    def add_storey(self, storey):
+        parent = create_sub_element(self.element, "bldg", "buildingSubdivision")
+        parent.append(storey.element)
 
     def add_building_feature(self, base_feature):
         if isinstance(base_feature, BuildingConstructiveElement):
@@ -20,7 +28,7 @@ class Building(BaseFeature):
         elif isinstance(base_feature, BuildingFurniture):
             self.add_building_furniture(base_feature)
         else:
-            print(f"Could not add building feature of type {type(base_feature).__name__} to building.")
+            logger.warning(f"Could not add building feature of type {type(base_feature).__name__} to building.")
 
     def add_building_constructive_element(self, building_constructive_element):
         parent = create_sub_element(self.element, "bldg", "buildingConstructiveElement")
