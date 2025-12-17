@@ -1,17 +1,18 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
+
 * [3D-GIS-BIM](#3d-gis-bim)
-  * [Project description](#project-description)
-  * [Getting started](#getting-started)
-  * [Getting started (Development)](#getting-started-development)
-  * [Mapping](#mapping)
+    * [Project description](#project-description)
+    * [Getting started](#getting-started)
+    * [Getting started (Development)](#getting-started-development)
+    * [Mapping](#mapping)
+
 <!-- TOC -->
 
 ## Project description
 
 ...
-
 
 ## Getting started
 
@@ -51,47 +52,29 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 The following Ifc entities are considered during the conversion. Prerequisite: The elements are assigned to a building.
 
-    IfcBuildingStorey
-    =================
-    Storey
+| Target GML Class                                                | Corresponding IFC Entities                                                                                                                             |
+|:----------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Building**                                                    | `IfcBuilding`                                                                                                                                          |
+| **Storey**                                                      | `IfcBuildingStorey`                                                                                                                                    |
+| **Bridge**                                                      | `IfcBridge`                                                                                                                                            |
+| **BridgePart**                                                  | `IfcBridgePart`                                                                                                                                        |
+| **BuildingConstructionElement** / **BridgeConstructionElement** | `IfcBeam`, `IfcColumn`, `IfcFooting`, `IfcMember`, `IfcPlate`, `IfcWall`, `IfcWallStandardCase`, `IfcRoof`, `IfcCurtainWall`, `IfcSlab`, `IfcCovering` |
+| **BuildingInstallation** / **BridgeInstallation**               | `IfcRailing`, `IfcRamp`, `IfcRampFlight`, `IfcStair`, `IfcStairFlight`, `IfcBuildingElementProxy`, `IfcBuildingElementComponent`, `IfcPile`            |
+| **BuildingRoom** / **BridgeRoom**                               | `IfcSpace`                                                                                                                                             |
+| **BuildingFurniture** /  **BridgeFurniture**                    | `IfcFurnishingElement`                                                                                                                                 |
+| **Door**                                                        | `IfcDoor`                                                                                                                                              |
+| **Window**                                                      | `IfcWindow`                                                                                                                                            |
 
-    BuildingConstructionElement    
-    ===========================
-    IfcBeam
-    IfcColumn
-    IfcFooting
-    IfcMember
-    IfcPlate
-    IfcWall
-    IfcWallStandardCase
-    IfcRoof
-    IfcCurtainWall
-    IfcSlab
-    IfcCovering
 
-    BuildingInstallation
-    ====================
-    IfcRailing
-    IfcRamp
-    IfcRampFlight
-    IfcStair
-    IfcStairFlight
-    IfcBuildingElementProxy
-    IfcBuildingElementComponent
-    IfcPile
+## Georeferencing
 
-    BuildingRoom
-    ============
-    IfcSpace
-    
-    BuildingFurniture
-    =================
-    IfcFurnishingElement
+CityGML requires the use of global coordinates. To convert the IFC model correctly, the Georeferencing information must be accurately processed. Supported are the following coordinate reference systems:
 
-    Door
-    ====
-    IfcDoor
+- LO_GEO_REF_30
+    - IfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing
+- LO_GEO_REF_40
+    - IfcGeometricRepresentation context of IfcProject contains georeferencing
+- LO_GEO_REF_50
+    - IfcMapConversion defines georeferencing of the "SurveyPoint", including coordinate system parameters
 
-    Window
-    ======
-    IfcWindow
+For every supported georeferencing the tool applies a transformation matrix to all geometries in the model, converting them from local values into global values.
