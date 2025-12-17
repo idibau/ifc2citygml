@@ -63,17 +63,17 @@ def get_next_related_object_or_structure_of_type(ifc_element, ifc_entity, visite
         if parent.is_a(ifc_entity):
             return parent
         if parent:
-            building = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
-            if building:
-                return building
+            element = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
+            if element:
+                return element
     for rel in getattr(ifc_element, "Decomposes", []):
         parent = rel.RelatingObject
         if parent.is_a(ifc_entity):
             return parent
         if parent:
-            building = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
-            if building:
-                return building
+            element = get_next_related_object_or_structure_of_type(parent, ifc_entity, visited)
+            if element:
+                return element
     return None
 
 
