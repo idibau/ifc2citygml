@@ -43,6 +43,14 @@ def get_building_storey(ifc_element):
     return get_next_related_object_or_structure_of_type(ifc_element, "IfcBuildingStorey")
 
 
+def get_bridge(ifc_element):
+    return get_next_related_object_or_structure_of_type(ifc_element, "IfcBridge")
+
+
+def get_bridge_part(ifc_element):
+    return get_next_related_object_or_structure_of_type(ifc_element, "IfcBridgePart")
+
+
 def get_next_related_object_or_structure_of_type(ifc_element, ifc_entity, visited=None):
     if visited is None:
         visited = set()

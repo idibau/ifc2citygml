@@ -24,7 +24,7 @@ docker build -t ifc2gml .
 Run the docker container:
 
 ```console
-docker run --rm -v .:/workspace ifc2gml input.ifc output.gml
+docker run --rm -v .:/workspace/data ifc2gml data/input.ifc data/output.gml
 ```
 
 The tool is executed by running main.py. It expect the following parameters:

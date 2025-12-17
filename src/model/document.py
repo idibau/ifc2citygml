@@ -1,5 +1,6 @@
 from lxml.etree import Element, ElementTree
 
+from model.bridge import Bridge
 from model.building import Building
 from utils.gml_utils import create_tag_with_namespace, create_sub_element, point_to_string
 from model.namespace import NS
@@ -28,6 +29,15 @@ class Document:
             building.add_storey(storey)
         for building_feature in building_features:
             building.add_building_feature(building_feature)
+
+    def add_bridge(self, bridge_parts, bridge_features):
+        bridge = Bridge()
+        city_object_member = create_sub_element(self.root, "core", "cityObjectMember")
+        city_object_member.append(bridge.element)
+        for bridge_part in bridge_parts:
+            bridge.add_bridge_part(bridge_part)
+        for bridge_feature in bridge_features:
+            bridge.add_bridge_feature(bridge_feature)
 
     def write(self, path):
         tree = ElementTree(self.root)
