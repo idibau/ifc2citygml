@@ -1,7 +1,7 @@
 import logging
 from collections import defaultdict
 
-from configuration.configuration import config
+from configuration.configuration import Configuration
 from model.building.building_constructive_element import BuildingConstructiveElement
 from model.filling import Filling
 from model.lod import Lod
@@ -31,7 +31,7 @@ class BuildingProcessor:
                 continue
 
             gid = getattr(ifc_product, "GlobalId")
-            feature = map_ifc_building_entity(ifc_product, config)
+            feature = map_ifc_building_entity(ifc_product, Configuration.load("/workspace/config.yml"))
             if not feature:
                 continue
 

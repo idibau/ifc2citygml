@@ -44,6 +44,3 @@ class Configuration(BaseModel):
         text = Path(path).read_text()
         expanded = os.path.expandvars(text)
         return parse_yaml_raw_as(cls, expanded)
-
-
-config = Configuration.load("/workspace/config.yml")

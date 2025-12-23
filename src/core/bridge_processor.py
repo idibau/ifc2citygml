@@ -1,6 +1,7 @@
 import logging
 from collections import defaultdict
 
+from configuration.configuration import Configuration
 from model.bridge.bridge_constructive_element import BridgeConstructiveElement
 from model.bridge.bridge_part import BridgePart
 from model.filling import Filling
@@ -30,10 +31,7 @@ class BridgeProcessor:
                 continue
 
             gid = getattr(ifc_product, "GlobalId")
-            ifc_entity = ifc_product.is_a()
-            predefined_type = getattr(ifc_product, "PredefinedType", None)
-
-            feature = map_ifc_bridge_entity(ifc_entity, predefined_type)
+            feature = map_ifc_bridge_entity(ifc_product, Configuration.load("/workspace/config.yml"))
             if not feature:
                 continue
 
