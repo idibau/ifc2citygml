@@ -1,2 +1,4 @@
-ifcopenshell==0.8.3.post2
-lxml
+ifcopenshell==0.8.4.post1
+lxml==6.0.2
+pydantic==2.12.5
+pydantic-yaml==1.6.0

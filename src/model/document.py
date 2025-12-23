@@ -1,9 +1,9 @@
 from lxml.etree import Element, ElementTree
 
-from model.bridge import Bridge
-from model.building import Building
-from utils.gml_utils import create_tag_with_namespace, create_sub_element, point_to_string
+from model.bridge.bridge import Bridge
+from model.building.building import Building
 from model.namespace import NS
+from utils.gml_utils import create_tag_with_namespace, create_sub_element, point_to_string
 
 
 class Document:

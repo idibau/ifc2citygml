@@ -1,0 +1,61 @@
+building_mapping:
+  building_constructive_element:
+    - entity: "IfcBeam"
+    - entity: "IfcColumn"
+    - entity: "IfcFooting"
+    - entity: "IfcMember"
+    - entity: "IfcPlate"
+    - entity: "IfcWall"
+    - entity: "IfcWallStandardCase"
+    - entity: "IfcRoof"
+    - entity: "IfcCurtainWall"
+    - entity: "IfcSlab"
+    - entity: "IfcCovering"
+  building_installation:
+    - entity: "IfcRailing"
+    - entity: "IfcRamp"
+    - entity: "IfcRampFlight"
+    - entity: "IfcStair"
+    - entity: "IfcStairFlight"
+    - entity: "IfcBuildingElementProxy"
+    - entity: "IfcBuildingElementComponent"
+    - entity: "IfcPile"
+  building_furniture:
+    - entity: "IfcFurnishingElement"
+  building_room:
+    - entity: "IfcSpace"
+  door:
+    - entity: "IfcDoor"
+  window:
+    - entity: "IfcWindow"
+
+bridge_mapping:
+  bridge_constructive_element:
+    - entity: "IfcBeam"
+    - entity: "IfcColumn"
+    - entity: "IfcFooting"
+    - entity: "IfcMember"
+    - entity: "IfcPlate"
+    - entity: "IfcWall"
+    - entity: "IfcWallStandardCase"
+    - entity: "IfcRoof"
+    - entity: "IfcCurtainWall"
+    - entity: "IfcSlab"
+    - entity: "IfcCovering"
+  bridge_installation:
+    - entity: "IfcRailing"
+    - entity: "IfcRamp"
+    - entity: "IfcRampFlight"
+    - entity: "IfcStair"
+    - entity: "IfcStairFlight"
+    - entity: "IfcBuildingElementProxy"
+    - entity: "IfcBuildingElementComponent"
+    - entity: "IfcPile"
+  bridge_furniture:
+    - entity: "IfcFurnishingElement"
+  bridge_room:
+    - entity: "IfcSpace"
+  door:
+    - entity: "IfcDoor"
+  window:
+    - entity: "IfcWindow"

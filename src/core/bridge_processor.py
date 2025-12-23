@@ -1,8 +1,8 @@
 import logging
 from collections import defaultdict
 
-from model.bridge_constructive_element import BridgeConstructiveElement
-from model.bridge_part import BridgePart
+from model.bridge.bridge_constructive_element import BridgeConstructiveElement
+from model.bridge.bridge_part import BridgePart
 from model.filling import Filling
 from model.lod import Lod
 from model.solid import Solid

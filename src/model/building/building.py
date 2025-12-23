@@ -1,16 +1,16 @@
 import logging
 
-from model.base_feature import BaseFeature
-from model.building_constructive_element import BuildingConstructiveElement
-from model.building_furniture import BuildingFurniture
-from model.building_installation import BuildingInstallation
-from model.building_room import BuildingRoom
+from model.building.building_base_feature import BuildingBaseFeature
+from model.building.building_constructive_element import BuildingConstructiveElement
+from model.building.building_furniture import BuildingFurniture
+from model.building.building_installation import BuildingInstallation
+from model.building.building_room import BuildingRoom
 from utils.gml_utils import create_sub_element
 
 logger = logging.getLogger(__name__)
 
 
-class Building(BaseFeature):
+class Building(BuildingBaseFeature):
     def __init__(self):
         super().__init__("bldg", "Building")
 

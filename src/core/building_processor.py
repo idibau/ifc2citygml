@@ -1,11 +1,12 @@
 import logging
 from collections import defaultdict
 
-from model.building_constructive_element import BuildingConstructiveElement
+from configuration.configuration import config
+from model.building.building_constructive_element import BuildingConstructiveElement
 from model.filling import Filling
 from model.lod import Lod
 from model.solid import Solid
-from model.storey import Storey
+from model.building.storey import Storey
 from utils.geometry import extract_geometry
 from utils.ifc_mapper import map_ifc_building_entity
 from utils.ifc_utils import get_building_storey, get_opening_element
@@ -30,10 +31,7 @@ class BuildingProcessor:
                 continue
 
             gid = getattr(ifc_product, "GlobalId")
-            ifc_entity = ifc_product.is_a()
-            predefined_type = getattr(ifc_product, "PredefinedType", None)
-
-            feature = map_ifc_building_entity(ifc_entity, predefined_type)
+            feature = map_ifc_building_entity(ifc_product, config)
             if not feature:
                 continue
 
@@ -47,6 +45,7 @@ class BuildingProcessor:
             self.features_by_gid[gid] = feature
 
             building_gid = getattr(building, "GlobalId")
+
 
             if isinstance(feature, Filling):
                 self._handle_filling(ifc_product, gid)

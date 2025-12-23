@@ -1,5 +1,10 @@
+from datetime import datetime, date
+
 import ifcopenshell.util.placement as placement_util
+import ifcopenshell
 import numpy as np
+
+from model.generic_attribute import GenericAttributeSet, StringAttribute, IntAttribute, DoubleAttribute, DateAttribute
 
 
 def get_local_matrix(placement):
@@ -87,3 +92,7 @@ def get_opening_element(ifc_element):
         return None
     opening_element = voids[0].RelatingBuildingElement
     return opening_element
+
+
+def get_pset(ifc_element, pset_name):
+    return ifcopenshell.util.element.get_pset(ifc_element, pset_name)
