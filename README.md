@@ -1,14 +1,16 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
-
 * [3D-GIS-BIM](#3d-gis-bim)
-    * [Project description](#project-description)
-    * [Getting started](#getting-started)
-    * [Getting started (Development)](#getting-started-development)
-    * [Mapping](#mapping)
-    * [Georeferencing](#georeferencing)
-
+  * [Project description](#project-description)
+  * [Getting started](#getting-started)
+  * [Getting started (Development)](#getting-started-development)
+  * [Configuration](#configuration)
+    * [Configuration Sections](#configuration-sections)
+    * [Spatial Structure](#spatial-structure)
+    * [Property Mapping](#property-mapping)
+    * [Technical documentation](#technical-documentation)
+  * [Georeferencing](#georeferencing)
 <!-- TOC -->
 
 ## Project description
@@ -33,7 +35,13 @@ The tool is executed by running main.py. It expect the following parameters:
 
 1. Path to the input IFC file
 2. Path to the output GML file
-3. Center the model in the output GML (optional boolean flag)
+
+The tool uses a default configuration. To use your own, you can map a specific file from your host machine to the
+exact location where the tool expects its configuration.
+
+```console
+docker run --rm -v .:/data -v ./my_local_config.yml:/workspace/config.yml -w /data ifc2gml input.ifc output.gml
+```
 
 ## Getting started (Development)
 
@@ -49,22 +57,50 @@ Install pip packages (Run in container at /workspace)
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
 
-## Mapping
+## Configuration
 
-The following Ifc entities are considered during the conversion. Prerequisite: The elements are assigned to a building.
+The conversion process is managed through a configuration file that defines which **IFC entities** and **PropertySets**
+are included in the transformation.
 
-| Target GML Class                                        | Corresponding IFC Entities                                                                                                                             |
-|:--------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Building                                                | `IfcBuilding`                                                                                                                                          |
-| Storey                                                  | `IfcBuildingStorey`                                                                                                                                    |
-| Bridge                                                  | `IfcBridge`                                                                                                                                            |
-| BridgePart                                              | `IfcBridgePart`                                                                                                                                        |
-| BuildingConstructionElement / BridgeConstructionElement | `IfcBeam`, `IfcColumn`, `IfcFooting`, `IfcMember`, `IfcPlate`, `IfcWall`, `IfcWallStandardCase`, `IfcRoof`, `IfcCurtainWall`, `IfcSlab`, `IfcCovering` |
-| BuildingInstallation / BridgeInstallation               | `IfcRailing`, `IfcRamp`, `IfcRampFlight`, `IfcStair`, `IfcStairFlight`, `IfcBuildingElementProxy`, `IfcBuildingElementComponent`, `IfcPile`            |
-| BuildingRoom / BridgeRoom                               | `IfcSpace`                                                                                                                                             |
-| BuildingFurniture /  BridgeFurniture                    | `IfcFurnishingElement`                                                                                                                                 |
-| Door                                                    | `IfcDoor`                                                                                                                                              |
-| Window                                                  | `IfcWindow`                                                                                                                                            |
+### Configuration Sections
+
+The configuration is divided into two primary sections:
+
+* **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
+* **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
+
+### Spatial Structure
+
+The converter automatically recognizes spatial structures defined within the IFC file:
+
+* **Buildings:** `IfcBuildingStorey` structures are identified.
+* **Bridges:** `IfcBridgePart` structures are identified.
+
+Note: To ensure compatibility and simplicity in the output, any nested spatial hierarchies are flattened
+to a single level during the conversion.
+
+### Property Mapping
+
+For each entity defined in the configuration, you can specify which **PropertySets** should be transferred. These
+properties are automatically mapped to **Generic Attribute Sets** within the resulting CityGML file.
+
+### Technical documentation
+
+The technical documentation can be found [here](configuration_schema.md). To generate the document "configuration
+schema" do the following:
+
+Generate json schema:
+
+```
+with open("configuration.json", "w") as stream:
+    json.dump(Configuration.model_json_schema(), stream, indent=4)
+```
+
+Generate markdown with [jsonschema-markdown](https://pypi.org/project/jsonschema-markdown/):
+
+```
+jsonschema-markdown configuration.json > configuration_schema.md --no-empty-columns
+```
 
 ## Georeferencing
 
