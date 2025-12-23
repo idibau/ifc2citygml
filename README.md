@@ -36,7 +36,7 @@ The tool is executed by running main.py. It expect the following parameters:
 1. Path to the input IFC file
 2. Path to the output GML file
 
-The tool uses a default configuration. To use your own, you can map a specific file from your host machine to the
+The tool uses a [default configuration](config.yml). To use your own, you can map a specific file from your host machine to the
 exact location where the tool expects its configuration.
 
 ```console
