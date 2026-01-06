@@ -1,3 +1,5 @@
+LOD: LOD_3
+
 building_mapping:
   building_constructive_element:
     - entity: "IfcBeam"
@@ -59,3 +61,6 @@ bridge_mapping:
     - entity: "IfcDoor"
   window:
     - entity: "IfcWindow"
+
+generic_mapping:
+  -  entity: "IfcDistributionFlowElement"

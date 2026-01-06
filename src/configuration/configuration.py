@@ -90,6 +90,10 @@ class Configuration(BaseModel):
         None,
         description="Specific mapping rules for bridge conversion."
     )
+    generic_mapping: Optional[List[EntityMapping]] = Field(
+        None,
+        description="Specific mapping rules for generic conversion."
+    )
 
     @classmethod
     def load(cls, path: str) -> "Configuration":

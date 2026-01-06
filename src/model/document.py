@@ -39,6 +39,10 @@ class Document:
         for bridge_feature in bridge_features:
             bridge.add_bridge_feature(bridge_feature)
 
+    def add_generic(self, generic_feature):
+        city_object_member = create_sub_element(self.root, "core", "cityObjectMember")
+        city_object_member.append(generic_feature.element)
+
     def write(self, path):
         tree = ElementTree(self.root)
         tree.write(

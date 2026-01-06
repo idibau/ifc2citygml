@@ -23,7 +23,7 @@ class BridgeProcessor:
         self.fillings_to_openings = {}
         self.envelope_points = []
 
-    def process(self, bridge_products):
+    def process(self, bridge_products, config):
         logger.debug(f"Processing {len(bridge_products)} Bridge elements...")
 
         for ifc_product, bridge in bridge_products:
@@ -31,7 +31,7 @@ class BridgeProcessor:
                 continue
 
             gid = getattr(ifc_product, "GlobalId")
-            feature = map_ifc_bridge_entity(ifc_product, Configuration.load("/workspace/config.yml"))
+            feature = map_ifc_bridge_entity(ifc_product, config)
             if not feature:
                 continue
 

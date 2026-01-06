@@ -23,7 +23,7 @@ class BuildingProcessor:
         self.fillings_to_openings = {}
         self.envelope_points = []
 
-    def process(self, building_products):
+    def process(self, building_products, config):
         logger.debug(f"Processing {len(building_products)} Building elements...")
 
         for ifc_product, building in building_products:
@@ -31,7 +31,7 @@ class BuildingProcessor:
                 continue
 
             gid = getattr(ifc_product, "GlobalId")
-            feature = map_ifc_building_entity(ifc_product, Configuration.load("/workspace/config.yml"))
+            feature = map_ifc_building_entity(ifc_product, config)
             if not feature:
                 continue
 
