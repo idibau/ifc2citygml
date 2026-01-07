@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 from pydantic_yaml import parse_yaml_raw_as
 from typing import List, Optional
 
+from configuration.lod import Lod
+
 
 class EntityMapping(BaseModel):
     """
@@ -82,6 +84,7 @@ class Configuration(BaseModel):
     Main configuration class for the IFC-to-CityGML conversion process.
     Manages the mapping rules for buildings and bridges.
     """
+    lod: Lod = Field(..., description="The desired CityGML LOD level.")
     building_mapping: Optional[BuildingMapping] = Field(
         None,
         description="Specific mapping rules for building conversion."

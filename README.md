@@ -68,6 +68,7 @@ The configuration is divided into two primary sections:
 
 * **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
 * **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
+* **Generic Configuration:** Targets all other `IfcProduct` entities.
 
 ### Spatial Structure
 

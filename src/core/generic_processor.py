@@ -1,7 +1,5 @@
 import logging
-from collections import defaultdict
 
-from model.lod import Lod
 from model.solid import Solid
 from utils.geometry import extract_geometry
 from utils.ifc_mapper import map_ifc_entity
@@ -31,7 +29,7 @@ class GenericProcessor:
             faces, vertices = geo_data
             self.envelope_points.append(vertices.reshape(-1, 3))
 
-            feature.add_solid(Solid(Lod.LOD_3, vertices, faces))
+            feature.add_solid(Solid(config.lod, vertices, faces))
             self.features.append(feature)
 
     def add_to_document(self, document):

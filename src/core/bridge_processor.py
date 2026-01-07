@@ -1,11 +1,9 @@
 import logging
 from collections import defaultdict
 
-from configuration.configuration import Configuration
 from model.bridge.bridge_constructive_element import BridgeConstructiveElement
 from model.bridge.bridge_part import BridgePart
 from model.filling import Filling
-from model.lod import Lod
 from model.solid import Solid
 from utils.geometry import extract_geometry
 from utils.ifc_mapper import map_ifc_bridge_entity
@@ -41,7 +39,7 @@ class BridgeProcessor:
             faces, vertices = geo_data
             self.envelope_points.append(vertices.reshape(-1, 3))
 
-            feature.add_solid(Solid(Lod.LOD_3, vertices, faces))
+            feature.add_solid(Solid(config.lod, vertices, faces))
             self.features_by_gid[gid] = feature
 
             bridge_gid = getattr(bridge, "GlobalId")

@@ -7,8 +7,10 @@ Manages the mapping rules for buildings and bridges.
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
+| lod | `string` | ✅ | [Lod](#lod) |  | The desired CityGML LOD level. |
 | building_mapping | `object` or `null` |  | [BuildingMapping](#buildingmapping) | `null` | Specific mapping rules for building conversion. |
 | bridge_mapping | `object` or `null` |  | [BridgeMapping](#bridgemapping) | `null` | Specific mapping rules for bridge conversion. |
+| generic_mapping | `array` or `null` |  | [EntityMapping](#entitymapping) | `null` | Specific mapping rules for generic conversion. |
 
 
 ---
@@ -55,6 +57,14 @@ Defines the mapping between an IFC entity and its associated property sets.
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
 | entity | `string` | ✅ | string |  | The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam'). |
 | property_sets | `array` |  | string | `[]` | A list of property set names to be extracted for this entity. |
+
+## Lod
+
+The available lods.
+
+#### Type: `string`
+
+**Possible Values:** `LOD_0` or `LOD_1` or `LOD_2` or `LOD_3`
 
 
 ---

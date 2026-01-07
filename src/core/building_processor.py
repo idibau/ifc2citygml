@@ -1,12 +1,10 @@
 import logging
 from collections import defaultdict
 
-from configuration.configuration import Configuration
 from model.building.building_constructive_element import BuildingConstructiveElement
-from model.filling import Filling
-from model.lod import Lod
-from model.solid import Solid
 from model.building.storey import Storey
+from model.filling import Filling
+from model.solid import Solid
 from utils.geometry import extract_geometry
 from utils.ifc_mapper import map_ifc_building_entity
 from utils.ifc_utils import get_building_storey, get_opening_element
@@ -41,11 +39,10 @@ class BuildingProcessor:
             faces, vertices = geo_data
             self.envelope_points.append(vertices.reshape(-1, 3))
 
-            feature.add_solid(Solid(Lod.LOD_3, vertices, faces))
+            feature.add_solid(Solid(config.lod, vertices, faces))
             self.features_by_gid[gid] = feature
 
             building_gid = getattr(building, "GlobalId")
-
 
             if isinstance(feature, Filling):
                 self._handle_filling(ifc_product, gid)

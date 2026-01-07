@@ -5,7 +5,7 @@ from utils.gml_utils import create_sub_element, create_tag_with_namespace, get_u
 
 class Solid(BaseFeature):
     def __init__(self, lod, vertices, faces):
-        super().__init__("core", f"{lod.value}Solid")
+        super().__init__("core", f"{lod.get_lod()}Solid")
         solid = create_sub_element(self.element, "gml", "Solid")
         exterior = create_sub_element(solid, "gml", "exterior")
         shell = create_sub_element(exterior, "gml", "Shell")
