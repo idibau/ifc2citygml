@@ -1,13 +1,14 @@
 import logging
-import numpy as np
+
 import ifcopenshell.geom
+import numpy as np
 from ifcopenshell.util.shape import get_faces, get_vertices
+
 from utils.transformation_matrix import TransformationMatrix
 
 logger = logging.getLogger(__name__)
 
 settings = ifcopenshell.geom.settings()
-settings.set(settings.USE_WORLD_COORDS, True)
 
 
 def extract_geometry(ifc_product):

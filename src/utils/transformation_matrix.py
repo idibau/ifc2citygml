@@ -3,7 +3,7 @@ import numpy as np
 import math
 import ifcopenshell.util.placement as placement_util
 
-from utils.ifc_utils import get_spatial_parent, get_absolute_placement
+from utils.ifc_utils import get_local_placement
 
 
 class TransformationMatrix:
@@ -26,7 +26,7 @@ class TransformationMatrix:
         return (vertices @ self.rotation.T) + self.translation
 
     def add_transformation(self, m):
-        self.m = self.m @ m
+        self.m = m @ self.m
 
     def add_context_transformation(self, ifc_product):
         representation = getattr(ifc_product, "Representation", None)
@@ -67,13 +67,6 @@ class TransformationMatrix:
             self.add_transformation(m)
 
     def add_object_placement_transformation(self, ifc_product):
-        # TODO is not used at the moment! m is not applied at the end. But applying is buggy -> FIX
         placement = getattr(ifc_product, "ObjectPlacement", None)
-        m = get_absolute_placement(placement) if placement else np.eye(4)
-        parent = get_spatial_parent(ifc_product)
-        while parent:
-            parent_place = getattr(parent, "ObjectPlacement", None)
-            if parent_place:
-                m = get_absolute_placement(parent_place) @ m
-            parent = get_spatial_parent(parent)
-        return m
+        m = get_local_placement(placement) if placement else np.eye(4)
+        self.add_transformation(m)

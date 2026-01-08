@@ -1,36 +1,9 @@
-from datetime import datetime, date
-
-import ifcopenshell.util.placement as placement_util
 import ifcopenshell
-import numpy as np
-
-from model.generic_attribute import GenericAttributeSet, StringAttribute, IntAttribute, DoubleAttribute, DateAttribute
+import ifcopenshell.util.placement as placement_util
 
 
-def get_local_matrix(placement):
+def get_local_placement(placement):
     return placement_util.get_local_placement(placement)
-
-
-def get_parent_placement(placement):
-    if not placement:
-        return None
-    if placement.is_a("IfcLocalPlacement"):
-        return getattr(placement, "PlacementRelTo", None)
-    elif placement.is_a("IfcLinearPlacement"):
-        return getattr(placement, "PositionedRelativeTo", None)
-    else:
-        return None
-
-
-def get_absolute_placement(placement):
-    mats = []
-    while placement:
-        mats.append(get_local_matrix(placement))
-        placement = getattr(placement, "PlacementRelTo", None)
-    total = np.eye(4)
-    for m in reversed(mats):  # parent first
-        total = total @ m
-    return total
 
 
 def get_spatial_parent(ifc_element):
