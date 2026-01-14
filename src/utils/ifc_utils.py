@@ -6,10 +6,9 @@ def get_local_placement(placement):
     return placement_util.get_local_placement(placement)
 
 
-def get_spatial_parent(ifc_element):
-    for rel in getattr(ifc_element, "ContainedInStructure", []) or []:
-        if rel.is_a("IfcRelContainedInSpatialStructure"):
-            return rel.RelatingStructure
+def get_spatial_structure(ifc_element):
+    for rel in getattr(ifc_element, "ContainedInStructure", []):
+        return rel.RelatingStructure
     return None
 
 
@@ -69,3 +68,10 @@ def get_opening_element(ifc_element):
 
 def get_pset(ifc_element, pset_name):
     return ifcopenshell.util.element.get_pset(ifc_element, pset_name)
+
+
+def get_name(ifc_element):
+    return getattr(ifc_element, "Name", None)
+
+def get_description(ifc_element):
+    return getattr(ifc_element, "Description", None)

@@ -1,10 +1,6 @@
-from model.bridge.bridge_base_feature import BridgeBaseFeature
+from model.city_object import CityObject
 
 
-class BridgeRoom(BridgeBaseFeature):
-    def __init__(self, ifc_entity, predefined_type):
-        super().__init__("brid", "BridgeRoom")
-        self.add_class(ifc_entity)
-
-    def add_solid(self, solid):
-        self.element.append(solid.element)
+class BridgeRoom(CityObject):
+    def __init__(self, ifc_element):
+        super().__init__("brid", "BridgeRoom", ifc_element)

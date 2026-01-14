@@ -1,18 +1,18 @@
 import logging
 
-from model.building.building_base_feature import BuildingBaseFeature
 from model.building.building_constructive_element import BuildingConstructiveElement
 from model.building.building_furniture import BuildingFurniture
 from model.building.building_installation import BuildingInstallation
 from model.building.building_room import BuildingRoom
+from model.city_object import CityObject
 from utils.gml_utils import create_sub_element
 
 logger = logging.getLogger(__name__)
 
 
-class Storey(BuildingBaseFeature):
-    def __init__(self):
-        super().__init__("bldg", "Storey")
+class Storey(CityObject):
+    def __init__(self, ifc_element):
+        super().__init__("bldg", "Storey", ifc_element)
 
     def add_building_feature(self, base_feature):
         if isinstance(base_feature, BuildingConstructiveElement):

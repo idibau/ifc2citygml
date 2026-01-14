@@ -30,7 +30,7 @@ def map_ifc_pset(pset_name, pset):
     attributes = []
     if pset:
         for property_key, property_value in pset.items():
-            if isinstance(property_value, int):
+            if not isinstance(property_value, bool) and isinstance(property_value, int):
                 attributes.append(IntAttribute(property_key, property_value))
             elif isinstance(property_value, float):
                 attributes.append(DoubleAttribute(property_key, property_value))
@@ -49,35 +49,34 @@ def map_ifc_building_entity(ifc_element, config):
         return None
 
     ifc_entity = ifc_element.is_a()
-    predefined_type = getattr(ifc_element, "PredefinedType", None)
 
     if ifc_entity == "IfcDoor":
-        return Door(ifc_entity, predefined_type)
+        return Door(ifc_element)
     if ifc_entity == "IfcWindow":
-        return Window(ifc_entity, predefined_type)
+        return Window(ifc_element)
 
     if ifc_entity in {e.entity for e in mapping.building_room}:
-        feature = BuildingRoom(ifc_entity, predefined_type)
+        feature = BuildingRoom(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.building_room, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.building_furniture}:
-        feature = BuildingFurniture(ifc_entity, predefined_type)
+        feature = BuildingFurniture(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.building_furniture, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.building_constructive_element}:
-        feature = BuildingConstructiveElement(ifc_entity, predefined_type)
+        feature = BuildingConstructiveElement(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.building_constructive_element, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.building_installation}:
-        feature = BuildingInstallation(ifc_entity, predefined_type)
+        feature = BuildingInstallation(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.building_installation, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.door}:
-        feature = Door(ifc_entity, predefined_type)
+        feature = Door(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.door, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.window}:
-        feature = Window(ifc_entity, predefined_type)
+        feature = Window(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.door, ifc_entity)
 
     return None
@@ -89,30 +88,29 @@ def map_ifc_bridge_entity(ifc_element, config):
         return None
 
     ifc_entity = ifc_element.is_a()
-    predefined_type = getattr(ifc_element, "PredefinedType", None)
 
     if ifc_entity in {e.entity for e in mapping.bridge_room}:
-        feature = BridgeRoom(ifc_entity, predefined_type)
+        feature = BridgeRoom(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.bridge_room, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.bridge_furniture}:
-        feature = BridgeFurniture(ifc_entity, predefined_type)
+        feature = BridgeFurniture(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.bridge_furniture, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.bridge_constructive_element}:
-        feature = BridgeConstructiveElement(ifc_entity, predefined_type)
+        feature = BridgeConstructiveElement(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.bridge_constructive_element, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.bridge_installation}:
-        feature = BridgeInstallation(ifc_entity, predefined_type)
+        feature = BridgeInstallation(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.bridge_installation, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.door}:
-        feature = Door(ifc_entity, predefined_type)
+        feature = Door(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.door, ifc_entity)
 
     if ifc_entity in {e.entity for e in mapping.window}:
-        feature = Window(ifc_entity, predefined_type)
+        feature = Window(ifc_element)
         return _attach_psets(ifc_element, feature, mapping.door, ifc_entity)
 
     return None
@@ -125,7 +123,7 @@ def map_ifc_entity(ifc_element, config):
     ifc_entity = ifc_element.is_a()
 
     if ifc_entity in {e.entity for e in mapping}:
-        feature = GenericOccupiedSpace(ifc_entity)
+        feature = GenericOccupiedSpace(ifc_element)
         return _attach_psets(ifc_element, feature, mapping, ifc_entity)
 
     return None

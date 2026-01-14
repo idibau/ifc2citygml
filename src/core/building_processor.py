@@ -1,6 +1,7 @@
 import logging
 from collections import defaultdict
 
+from model.building.building import Building
 from model.building.building_constructive_element import BuildingConstructiveElement
 from model.building.storey import Storey
 from model.filling import Filling
@@ -14,11 +15,12 @@ logger = logging.getLogger(__name__)
 
 class BuildingProcessor:
     def __init__(self):
-        self.features_by_storey = defaultdict(list)
-        self.storeys_by_building = defaultdict(set)
-        self.features_by_building = defaultdict(list)
+        self.features_by_storey_gid = defaultdict(list)
+        self.storey_gids_by_building_gid = defaultdict(set)
+        self.features_by_building_gid = defaultdict(list)
+        self.buildings_and_storeys_by_gid = {}
+        self.filling_gids_by_opening_gids = {}
         self.features_by_gid = {}
-        self.fillings_to_openings = {}
         self.envelope_points = []
 
     def process(self, building_products, config):
@@ -39,10 +41,11 @@ class BuildingProcessor:
             faces, vertices = geo_data
             self.envelope_points.append(vertices.reshape(-1, 3))
 
-            feature.add_solid(Solid(config.lod, vertices, faces))
+            feature.set_solid(Solid(config.lod, vertices, faces))
             self.features_by_gid[gid] = feature
 
             building_gid = getattr(building, "GlobalId")
+            self.buildings_and_storeys_by_gid[building_gid] = building
 
             if isinstance(feature, Filling):
                 self._handle_filling(ifc_product, gid)
@@ -55,33 +58,39 @@ class BuildingProcessor:
         storey = get_building_storey(ifc_product)
         if storey:
             storey_gid = getattr(storey, "GlobalId")
-            self.storeys_by_building[building_gid].add(storey_gid)
-            self.features_by_storey[storey_gid].append(feature)
+            self.buildings_and_storeys_by_gid[storey_gid] = storey
+            self.storey_gids_by_building_gid[building_gid].add(storey_gid)
+            self.features_by_storey_gid[storey_gid].append(feature)
         else:
-            self.features_by_building[building_gid].append(feature)
+            self.features_by_building_gid[building_gid].append(feature)
 
     def _handle_filling(self, ifc_product, gid):
         opening = get_opening_element(ifc_product)
         if opening:
-            self.fillings_to_openings[gid] = getattr(opening, "GlobalId")
+            self.filling_gids_by_opening_gids[gid] = getattr(opening, "GlobalId")
         else:
             logger.warning(f"Could not retrieve opening for filling {gid}")
 
     def _connect_fillings(self):
-        for fill_id, open_id in self.fillings_to_openings.items():
+        for fill_id, open_id in self.filling_gids_by_opening_gids.items():
             filling = self.features_by_gid.get(fill_id)
             opening = self.features_by_gid.get(open_id)
             if isinstance(filling, Filling) and isinstance(opening, BuildingConstructiveElement):
                 opening.add_filling(filling)
 
     def add_to_document(self, document):
-        for key in self.features_by_building.keys() | self.storeys_by_building.keys():
-            building_features = self.features_by_building.get(key, [])
+        for key in self.features_by_building_gid.keys() | self.storey_gids_by_building_gid.keys():
+            building_features = self.features_by_building_gid.get(key, [])
             storeys = []
-            for storey_id in self.storeys_by_building.get(key, []):
-                storey_features = self.features_by_storey[storey_id]
-                storey = Storey()
+            for storey_id in self.storey_gids_by_building_gid.get(key, []):
+                storey_features = self.features_by_storey_gid[storey_id]
+                storey = Storey(self.buildings_and_storeys_by_gid[storey_id])
                 for storey_feature in storey_features:
                     storey.add_building_feature(storey_feature)
                 storeys.append(storey)
-            document.add_building(storeys, building_features)
+            building = Building(self.buildings_and_storeys_by_gid[key])
+            for storey in storeys:
+                building.add_storey(storey)
+            for building_feature in building_features:
+                building.add_building_feature(building_feature)
+            document.add_building(building)

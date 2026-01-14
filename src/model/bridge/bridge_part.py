@@ -1,18 +1,18 @@
 import logging
 
-from model.bridge.bridge_base_feature import BridgeBaseFeature
 from model.bridge.bridge_constructive_element import BridgeConstructiveElement
 from model.bridge.bridge_furniture import BridgeFurniture
 from model.bridge.bridge_installation import BridgeInstallation
 from model.bridge.bridge_room import BridgeRoom
+from model.city_object import CityObject
 from utils.gml_utils import create_sub_element
 
 logger = logging.getLogger(__name__)
 
 
-class BridgePart(BridgeBaseFeature):
-    def __init__(self):
-        super().__init__("brid", "BridgePart")
+class BridgePart(CityObject):
+    def __init__(self, ifc_element):
+        super().__init__("brid", "BridgePart", ifc_element)
 
     def add_bridge_feature(self, base_feature):
         if isinstance(base_feature, BridgeConstructiveElement):

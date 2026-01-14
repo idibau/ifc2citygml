@@ -1,4 +1,5 @@
 import uuid
+
 from lxml.etree import Element, SubElement
 
 from model.namespace import NS
@@ -30,3 +31,15 @@ def create_element(namespace, tag):
 
 def create_sub_element(parent, namespace, tag):
     return SubElement(parent, create_tag_with_namespace(namespace, tag))
+
+
+def create_class_value(ifc_element):
+    object_type = getattr(ifc_element, "ObjectType", None)
+    predefined_type = getattr(ifc_element, "PredefinedType", None)
+    class_value = ifc_element.is_a()
+    if predefined_type:
+        return f"{class_value}/{predefined_type}"
+    elif object_type:
+        return f"{class_value}/{object_type}"
+    else:
+        return class_value

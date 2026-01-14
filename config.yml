@@ -34,7 +34,11 @@ building_mapping:
 bridge_mapping:
   bridge_constructive_element:
     - entity: "IfcBeam"
+      property_sets:
+        - "Qto_BeamBaseQuantities"
     - entity: "IfcColumn"
+      property_sets:
+        - "Qto_ColumnBaseQuantities"
     - entity: "IfcFooting"
     - entity: "IfcMember"
     - entity: "IfcPlate"
@@ -43,6 +47,8 @@ bridge_mapping:
     - entity: "IfcRoof"
     - entity: "IfcCurtainWall"
     - entity: "IfcSlab"
+      property_sets:
+        - "Qto_SlabBaseQuantities"
     - entity: "IfcCovering"
   bridge_installation:
     - entity: "IfcRailing"

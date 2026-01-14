@@ -1,9 +1,6 @@
-from model.base_feature import BaseFeature
+from model.city_object import CityObject
 
 
-class Filling(BaseFeature):
-    def __init__(self, namespace, tag,  ifc_entity, predefined_type):
-        super().__init__(namespace, tag)
-
-    def add_solid(self, solid):
-        self.element.append(solid.element)
+class Filling(CityObject):
+    def __init__(self, namespace, tag, ifc_element):
+        super().__init__(namespace, tag, ifc_element)

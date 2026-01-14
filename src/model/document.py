@@ -1,7 +1,5 @@
 from lxml.etree import Element, ElementTree
 
-from model.bridge.bridge import Bridge
-from model.building.building import Building
 from model.namespace import NS
 from utils.gml_utils import create_tag_with_namespace, create_sub_element, point_to_string
 
@@ -21,23 +19,13 @@ class Document:
         upper_corner = create_sub_element(envelope, "gml", "upperCorner")
         upper_corner.text = point_to_string(max_corner)
 
-    def add_building(self, storeys, building_features):
-        building = Building()
+    def add_building(self, building):
         city_object_member = create_sub_element(self.root, "core", "cityObjectMember")
         city_object_member.append(building.element)
-        for storey in storeys:
-            building.add_storey(storey)
-        for building_feature in building_features:
-            building.add_building_feature(building_feature)
 
-    def add_bridge(self, bridge_parts, bridge_features):
-        bridge = Bridge()
+    def add_bridge(self, bridge):
         city_object_member = create_sub_element(self.root, "core", "cityObjectMember")
         city_object_member.append(bridge.element)
-        for bridge_part in bridge_parts:
-            bridge.add_bridge_part(bridge_part)
-        for bridge_feature in bridge_features:
-            bridge.add_bridge_feature(bridge_feature)
 
     def add_generic(self, generic_feature):
         city_object_member = create_sub_element(self.root, "core", "cityObjectMember")

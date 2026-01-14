@@ -7,7 +7,7 @@ from core.bridge_processor import BridgeProcessor
 from core.building_processor import BuildingProcessor
 from core.generic_processor import GenericProcessor
 from model.document import Document
-from utils.ifc_utils import get_building, get_bridge
+wfrom utils.ifc_utils import get_building, get_bridge, get_spatial_structure, get_spatial_structure
 
 logger = logging.getLogger(__name__)
 
