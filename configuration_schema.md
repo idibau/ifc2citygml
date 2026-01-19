@@ -10,7 +10,8 @@ Manages the mapping rules for buildings and bridges.
 | lod | `string` | ✅ | [Lod](#lod) |  | The desired CityGML LOD level. |
 | building_mapping | `object` or `null` |  | [BuildingMapping](#buildingmapping) | `null` | Specific mapping rules for building conversion. |
 | bridge_mapping | `object` or `null` |  | [BridgeMapping](#bridgemapping) | `null` | Specific mapping rules for bridge conversion. |
-| generic_mapping | `array` or `null` |  | [EntityMapping](#entitymapping) | `null` | Specific mapping rules for generic conversion. |
+| other_construction_mapping | `array` |  | [EntityMapping](#entitymapping) | `[]` | Specific mapping rules for other construction conversion. |
+| generic_mapping | `array` |  | [EntityMapping](#entitymapping) | `[]` | Specific mapping rules for generic conversion. |
 
 
 ---

@@ -72,4 +72,4 @@ other_construction_mapping:
   -  entity: "IfcDistributionFlowElement"
 
 generic_mapping:
-  -  entity: "IfcDistributionFlowElement"
+  -  entity: "IfcSpace"

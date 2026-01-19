@@ -68,7 +68,8 @@ The configuration is divided into two primary sections:
 
 * **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
 * **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
-* **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous two sections.
+* **Other Construction Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous two sections.
+* **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three sections.
 
 ### Spatial Structure
 
@@ -94,6 +95,7 @@ Generate json schema:
 
 ```
 with open("configuration.json", "w") as stream:
+    import json
     json.dump(Configuration.model_json_schema(), stream, indent=4)
 ```
 
