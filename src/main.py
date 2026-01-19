@@ -5,7 +5,9 @@ import sys
 
 import ifcopenshell
 
+from configuration.configuration import Configuration
 from core.ifc_to_gml import convert
+from model.document import Document
 
 logging_format = "%(asctime)s - %(filename)s:%(lineno)s - %(levelname)s - %(message)s"
 stream_handler = logging.StreamHandler(sys.stdout)
@@ -28,10 +30,10 @@ def main():
     model = ifcopenshell.open(str(args.input))
 
     logger.info("Converting")
-    document = convert(model, args.input.stem)
 
-    logger.info(f"Writing GML: {args.output}")
-    document.write(str(args.output))
+    config = Configuration.load("/workspace/config.yml")
+    with Document(args.input.stem, str(args.output)) as document:
+        convert(model, document, config)
 
     logger.info("Done")
 

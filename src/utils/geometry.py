@@ -25,3 +25,9 @@ def extract_geometry(ifc_product):
     matrix = TransformationMatrix(ifc_product)
     absolute_vertices = matrix.apply_transformation(relative_vertices)
     return faces, absolute_vertices
+
+
+def get_min_max_from_vertices(vertices):
+    envelope_points = vertices.reshape(-1, 3)
+    return envelope_points.min(axis=0), envelope_points.max(axis=0)
+

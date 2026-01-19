@@ -26,11 +26,11 @@ def create_tag_with_namespace(namespace, tag):
 
 
 def create_element(namespace, tag):
-    return Element(create_tag_with_namespace(namespace, tag))
+    return Element(create_tag_with_namespace(namespace, tag), nsmap=NS)
 
 
 def create_sub_element(parent, namespace, tag):
-    return SubElement(parent, create_tag_with_namespace(namespace, tag))
+    return SubElement(parent, create_tag_with_namespace(namespace, tag), nsmap=NS)
 
 
 def create_class_value(ifc_element):

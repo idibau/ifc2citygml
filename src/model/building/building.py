@@ -18,30 +18,30 @@ class Building(CityObject):
         parent = create_sub_element(self.element, "bldg", "buildingSubdivision")
         parent.append(storey.element)
 
-    def add_building_feature(self, base_feature):
-        if isinstance(base_feature, BuildingConstructiveElement):
-            self.add_building_constructive_element(base_feature)
-        elif isinstance(base_feature, BuildingInstallation):
-            self.add_building_installation(base_feature)
-        elif isinstance(base_feature, BuildingRoom):
-            self.add_building_room(base_feature)
-        elif isinstance(base_feature, BuildingFurniture):
-            self.add_building_furniture(base_feature)
+    def add_building_feature(self, building_feature):
+        if isinstance(building_feature, BuildingConstructiveElement):
+            self._add_building_constructive_element(building_feature)
+        elif isinstance(building_feature, BuildingInstallation):
+            self._add_building_installation(building_feature)
+        elif isinstance(building_feature, BuildingRoom):
+            self._add_building_room(building_feature)
+        elif isinstance(building_feature, BuildingFurniture):
+            self._add_building_furniture(building_feature)
         else:
-            logger.warning(f"Could not add building feature of type {type(base_feature).__name__} to building.")
+            logger.warning(f"Could not add building feature of type {type(building_feature).__name__} to building.")
 
-    def add_building_constructive_element(self, building_constructive_element):
+    def _add_building_constructive_element(self, building_constructive_element):
         parent = create_sub_element(self.element, "bldg", "buildingConstructiveElement")
         parent.append(building_constructive_element.element)
 
-    def add_building_installation(self, building_installation):
+    def _add_building_installation(self, building_installation):
         parent = create_sub_element(self.element, "bldg", "buildingInstallation")
         parent.append(building_installation.element)
 
-    def add_building_room(self, building_room):
+    def _add_building_room(self, building_room):
         parent = create_sub_element(self.element, "bldg", "buildingRoom")
         parent.append(building_room.element)
 
-    def add_building_furniture(self, building_furniture):
+    def _add_building_furniture(self, building_furniture):
         parent = create_sub_element(self.element, "bldg", "buildingFurniture")
         parent.append(building_furniture.element)

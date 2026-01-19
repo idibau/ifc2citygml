@@ -1,7 +1,9 @@
 import logging
 
+import numpy as np
+
 from model.solid import Solid
-from utils.geometry import extract_geometry
+from utils.geometry import extract_geometry, get_min_max_from_vertices
 from utils.ifc_mapper import map_ifc_entity
 
 logger = logging.getLogger(__name__)
@@ -9,13 +11,17 @@ logger = logging.getLogger(__name__)
 
 class GenericProcessor:
     def __init__(self):
-        self.features = []
-        self.envelope_points = []
+        self.envelope_min = None
+        self.envelope_max = None
 
-    def process(self, products, config):
-        logger.debug(f"Processing {len(products)} generic elements...")
+    def process(self, ifc_products, config, document):
+        number_of_products = len(ifc_products)
+        logger.info(f"Processing {number_of_products} generic elements")
 
-        for ifc_product in products:
+        for index, ifc_product in enumerate(ifc_products):
+            feature_id = getattr(ifc_product, "GlobalId")
+            logger.debug(f"Processing {index + 1}/{number_of_products} generic element with id {feature_id}")
+
             if not getattr(ifc_product, "Representation", None):
                 continue
 
@@ -27,11 +33,17 @@ class GenericProcessor:
             if not geo_data:
                 continue
             faces, vertices = geo_data
-            self.envelope_points.append(vertices.reshape(-1, 3))
+
+            self._update_envelope(vertices)
 
             feature.set_solid(Solid(config.lod, vertices, faces))
-            self.features.append(feature)
-
-    def add_to_document(self, document):
-        for feature in self.features:
             document.add_generic(feature)
+
+    def _update_envelope(self, vertices):
+        product_min, product_max = get_min_max_from_vertices(vertices)
+        if self.envelope_min is None:
+            self.envelope_min = product_min
+            self.envelope_max = product_max
+        else:
+            self.envelope_min = np.minimum(self.envelope_min, product_min)
+            self.envelope_max = np.maximum(self.envelope_max, product_max)

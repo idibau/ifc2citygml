@@ -93,8 +93,8 @@ class Configuration(BaseModel):
         None,
         description="Specific mapping rules for bridge conversion."
     )
-    generic_mapping: Optional[List[EntityMapping]] = Field(
-        None,
+    generic_mapping: List[EntityMapping] = Field(
+        default_factory=list, json_schema_extra={"default": []},
         description="Specific mapping rules for generic conversion."
     )
 
