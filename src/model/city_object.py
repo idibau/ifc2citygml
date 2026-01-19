@@ -11,6 +11,7 @@ class CityObject(BaseFeature):
 
     def __init__(self, namespace, tag, ifc_element):
         super().__init__(namespace, tag)
+        self.namespace = namespace
         self.ifc_element = ifc_element
         self._set_class(create_class_value(ifc_element))
         self.add_name(get_name(ifc_element))
@@ -26,15 +27,15 @@ class CityObject(BaseFeature):
                 f"Solid already exists on city object of ifc element {getattr(self.ifc_element, "GlobalId", None)}")
 
     def _set_class(self, value):
-        class_element = create_sub_element(self.element, "bldg", "class")
+        class_element = create_sub_element(self.element, self.namespace, "class")
         class_element.text = value
 
     def add_function(self, value):
-        function_element = create_sub_element(self.element, "bldg", "function")
+        function_element = create_sub_element(self.element, self.namespace, "function")
         function_element.text = value
 
     def add_usage(self, value):
-        usage_element = create_sub_element(self.element, "bldg", "usage")
+        usage_element = create_sub_element(self.element, self.namespace, "usage")
         usage_element.text = value
 
     def add_name(self, name):

@@ -4,28 +4,28 @@ import numpy as np
 
 from model.solid import Solid
 from utils.geometry import extract_geometry, get_min_max_from_vertices
-from utils.ifc_mapper import map_to_generic_entity
+from utils.ifc_mapper import map_to_other_construction_entity
 
 logger = logging.getLogger(__name__)
 
 
-class GenericProcessor:
+class OtherConstructionProcessor:
     def __init__(self):
         self.envelope_min = None
         self.envelope_max = None
 
     def process(self, ifc_products, config, document):
         number_of_products = len(ifc_products)
-        logger.info(f"Processing {number_of_products} generic elements")
+        logger.info(f"Processing {number_of_products} other construction elements")
 
         for index, ifc_product in enumerate(ifc_products):
             feature_id = getattr(ifc_product, "GlobalId")
-            logger.debug(f"Processing {index + 1}/{number_of_products} generic element with id {feature_id}")
+            logger.debug(f"Processing {index + 1}/{number_of_products} other construction element with id {feature_id}")
 
             if not getattr(ifc_product, "Representation", None):
                 continue
 
-            feature = map_to_generic_entity(ifc_product, config)
+            feature = map_to_other_construction_entity(ifc_product, config)
             if not feature:
                 continue
 

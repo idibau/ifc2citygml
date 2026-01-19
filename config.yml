@@ -68,5 +68,8 @@ bridge_mapping:
   window:
     - entity: "IfcWindow"
 
+other_construction_mapping:
+  -  entity: "IfcDistributionFlowElement"
+
 generic_mapping:
   -  entity: "IfcDistributionFlowElement"

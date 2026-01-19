@@ -11,6 +11,7 @@ from model.building.building_room import BuildingRoom
 from model.door import Door
 from model.generic_attribute import GenericAttributeSet, IntAttribute, DoubleAttribute, DateAttribute, StringAttribute
 from model.generic_occupied_space import GenericOccupiedSpace
+from model.other_construction import OtherConstruction
 from model.window import Window
 from utils.ifc_utils import get_pset
 
@@ -43,7 +44,7 @@ def map_ifc_pset(pset_name, pset):
     return GenericAttributeSet(pset_name, attributes)
 
 
-def map_ifc_building_entity(ifc_element, config):
+def map_to_building_entity(ifc_element, config):
     mapping = config.building_mapping
     if not mapping:
         return None
@@ -82,7 +83,7 @@ def map_ifc_building_entity(ifc_element, config):
     return None
 
 
-def map_ifc_bridge_entity(ifc_element, config):
+def map_to_bridge_entity(ifc_element, config):
     mapping = config.bridge_mapping
     if not mapping:
         return None
@@ -115,7 +116,22 @@ def map_ifc_bridge_entity(ifc_element, config):
 
     return None
 
-def map_ifc_entity(ifc_element, config):
+
+def map_to_other_construction_entity(ifc_element, config):
+    mapping = config.other_construction_mapping
+    if not mapping:
+        return None
+
+    ifc_entity = ifc_element.is_a()
+
+    if ifc_entity in {e.entity for e in mapping}:
+        feature = OtherConstruction(ifc_element)
+        return _attach_psets(ifc_element, feature, mapping, ifc_entity)
+
+    return None
+
+
+def map_to_generic_entity(ifc_element, config):
     mapping = config.generic_mapping
     if not mapping:
         return None
@@ -127,4 +143,3 @@ def map_ifc_entity(ifc_element, config):
         return _attach_psets(ifc_element, feature, mapping, ifc_entity)
 
     return None
-

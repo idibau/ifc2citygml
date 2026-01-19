@@ -93,6 +93,10 @@ class Configuration(BaseModel):
         None,
         description="Specific mapping rules for bridge conversion."
     )
+    other_construction_mapping: List[EntityMapping] = Field(
+        default_factory=list, json_schema_extra={"default": []},
+        description="Specific mapping rules for other construction conversion."
+    )
     generic_mapping: List[EntityMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
         description="Specific mapping rules for generic conversion."

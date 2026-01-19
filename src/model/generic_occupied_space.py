@@ -1,8 +1,4 @@
-import logging
-
 from model.city_object import CityObject
-
-logger = logging.getLogger(__name__)
 
 
 class GenericOccupiedSpace(CityObject):

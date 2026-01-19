@@ -9,7 +9,7 @@ from model.building.storey import Storey
 from model.filling import Filling
 from model.solid import Solid
 from utils.geometry import extract_geometry, get_min_max_from_vertices
-from utils.ifc_mapper import map_ifc_building_entity
+from utils.ifc_mapper import map_to_building_entity
 from utils.ifc_utils import get_building_storey, get_opening_element
 
 logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class BuildingProcessor:
                 if not getattr(ifc_product, "Representation", None):
                     continue
 
-                feature = map_ifc_building_entity(ifc_product, config)
+                feature = map_to_building_entity(ifc_product, config)
                 if not feature:
                     continue
                 else:
