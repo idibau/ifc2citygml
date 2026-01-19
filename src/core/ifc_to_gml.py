@@ -35,11 +35,11 @@ def convert(model, document, config):
                 products_bridge.append((product, bridge))
                 continue
 
-        if config.other_construction_mapping and is_other_construction_mapped_product(product, config):
+        if is_other_construction_mapped_product(product, config):
             products_other_construction.append(product)
             continue
 
-        if config.generic_mapping and is_generic_mapped_product(product, config):
+        if is_generic_mapped_product(product, config):
             products_generic.append(product)
             continue
 
@@ -68,7 +68,7 @@ def convert(model, document, config):
 
 def is_other_construction_mapped_product(ifc_product, config):
     entity = ifc_product.is_a()
-    return entity in [entity_mapping.entity for entity_mapping in config.generic_mapping]
+    return entity in [entity_mapping.entity for entity_mapping in config.other_construction_mapping]
 
 
 def is_generic_mapped_product(ifc_product, config):

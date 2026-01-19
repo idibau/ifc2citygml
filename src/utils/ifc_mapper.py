@@ -14,14 +14,24 @@ from model.generic_occupied_space import GenericOccupiedSpace
 from model.other_construction import OtherConstruction
 from model.window import Window
 from utils.ifc_utils import get_pset
+from collections import defaultdict
 
 
 def _attach_psets(ifc_element, feature, entity_mapping_list, ifc_entity):
     mapping_entry = next((e for e in entity_mapping_list if e.entity == ifc_entity), None)
     if mapping_entry:
-        for pset_name in mapping_entry.property_sets:
+        properties_by_psets = defaultdict(list)
+        for item in mapping_entry.properties:
+            pset, property_name = item.split(".", 1)
+            properties_by_psets[pset].append(property_name)
+
+        for pset_name, property_names in properties_by_psets.items():
             pset = get_pset(ifc_element, pset_name)
-            generic_attribute_set = map_ifc_pset(pset_name, pset)
+            filtered_pset = {}
+            for property_name in property_names:
+                if property_name in pset:
+                    filtered_pset[property_name] = pset[property_name]
+            generic_attribute_set = map_ifc_pset(pset_name, filtered_pset)
             if generic_attribute_set:
                 feature.add_generic_attribute(generic_attribute_set)
     return feature

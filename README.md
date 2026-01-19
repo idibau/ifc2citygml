@@ -36,7 +36,8 @@ The tool is executed by running main.py. It expect the following parameters:
 1. Path to the input IFC file
 2. Path to the output GML file
 
-The tool uses a [default configuration](config.yml). To use your own, you can map a specific file from your host machine to the
+The tool uses a [default configuration](config.yml). To use your own, you can map a specific file from your host machine
+to the
 exact location where the tool expects its configuration.
 
 ```console
@@ -68,8 +69,10 @@ The configuration is divided into two primary sections:
 
 * **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
 * **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
-* **Other Construction Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous two sections.
-* **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three sections.
+* **Other Construction Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous
+  two sections.
+* **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three
+  sections.
 
 ### Spatial Structure
 
@@ -83,8 +86,9 @@ to a single level during the conversion.
 
 ### Property Mapping
 
-For each entity defined in the configuration, you can specify which **PropertySets** should be transferred. These
-properties are automatically mapped to **Generic Attribute Sets** within the resulting CityGML file.
+For each entity defined in the configuration, you can specify which **Properties** should be transferred. These
+properties are automatically mapped to **Generic Attribute Sets** within the resulting CityGML file. Use this notation
+to configure the properties: \$pset.\$property.
 
 ### Technical documentation
 

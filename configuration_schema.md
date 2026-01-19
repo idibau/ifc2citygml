@@ -54,10 +54,10 @@ Defines the mapping between an IFC entity and its associated property sets.
 
 #### Type: `object`
 
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | string |  | The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam'). |
-| property_sets | `array` |  | string | `[]` | A list of property set names to be extracted for this entity. |
+| Property   | Type | Required | Possible values | Default | Description                                                               |
+|------------| ---- | -------- | --------------- | ------- |---------------------------------------------------------------------------|
+| entity     | `string` | ✅ | string |  | The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam').                |
+| properties | `array` |  | string | `[]` | A list of properties to be extracted for this entity. (\$pset.\$property) |
 
 ## Lod
 
