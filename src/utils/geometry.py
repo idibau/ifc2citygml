@@ -9,6 +9,8 @@ from utils.transformation_matrix import TransformationMatrix
 logger = logging.getLogger(__name__)
 
 settings = ifcopenshell.geom.settings()
+settings.set("mesher-linear-deflection", 0.2)
+settings.set("mesher-angular-deflection", 0.8)
 
 
 def extract_geometry(ifc_product):
