@@ -179,7 +179,6 @@ T_{LO_GEO_REF_40}
 T_{LO_GEO_REF_30}
 \cdot
 G_{local}
-$$
 ```
 
 ![Level of Georeferencing](assets/logeoref.png)
