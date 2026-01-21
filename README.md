@@ -1,22 +1,24 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
+
 * [3D-GIS-BIM](#3d-gis-bim)
-  * [Project description](#project-description)
-  * [Getting started](#getting-started)
-  * [Getting started (Development)](#getting-started-development)
-  * [Configuration](#configuration)
-    * [Configuration Sections](#configuration-sections)
-      * [LOD](#lod)
-      * [IFC Product Configuration](#ifc-product-configuration)
-      * [Volumetric Modeling](#volumetric-modeling)
-      * [Coordinate Reference Systems](#coordinate-reference-systems)
-    * [Spatial Structure](#spatial-structure)
-    * [Property and attribute mapping](#property-and-attribute-mapping)
-    * [Technical documentation](#technical-documentation)
-  * [Geometry conversion](#geometry-conversion)
-  * [Georeferencing](#georeferencing)
+    * [Project description](#project-description)
+    * [Getting started](#getting-started)
+    * [Getting started (Development)](#getting-started-development)
+    * [Configuration](#configuration)
+        * [Configuration Sections](#configuration-sections)
+            * [LOD](#lod)
+            * [IFC Product Configuration](#ifc-product-configuration)
+            * [Volumetric Modeling](#volumetric-modeling)
+            * [Coordinate Reference Systems](#coordinate-reference-systems)
+        * [Spatial Structure](#spatial-structure)
+        * [Property and attribute mapping](#property-and-attribute-mapping)
+        * [Technical documentation](#technical-documentation)
+    * [Geometry conversion](#geometry-conversion)
+    * [Georeferencing](#georeferencing)
 * [References](#references)
+
 <!-- TOC -->
 
 ## Project description
@@ -68,16 +70,17 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 ## Configuration
 
-The conversion process is managed through a configuration file that defines which **IFC entities**, **Attributes** and
-**PropertySets** are included in the conversion.
+The conversion process is managed through a configuration file that defines the **Level of detail** and which **IFC
+entities**, **Attributes** and **PropertySets** are included in the conversion.
 
 ### Configuration Sections
 
 #### LOD
 
 The configuration begins with the definition of the Level of Detail (LOD). The selected LOD determines the LOD class to
-which all geometrical elements are written. The CityGML Conceptual Model differentiates four consecutive Levels of
-Detail (LOD 0-3), where objects become more detailed with increasing LOD with respect to their geometry.
+which all geometrical elements are written and must be manually adapted to fit the to-be-processed IFC file and
+configuration. The CityGML Conceptual Model differentiates four consecutive Levels of Detail (LOD 0-3), where objects
+become more detailed with increasing LOD with respect to their geometry.
 
 ![LOD](assets/lod.png)
 
