@@ -1,21 +1,23 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
+
 * [3D-GIS-BIM](#3d-gis-bim)
-  * [Project description](#project-description)
-  * [Getting started](#getting-started)
-  * [Getting started (Development)](#getting-started-development)
-  * [Configuration](#configuration)
-    * [LOD](#lod)
-    * [IFC Product Configuration](#ifc-product-configuration)
-    * [Property and attribute mapping](#property-and-attribute-mapping)
-    * [Technical documentation](#technical-documentation)
-  * [Volumetric Modeling](#volumetric-modeling)
-  * [Coordinate Reference Systems](#coordinate-reference-systems)
-  * [Spatial Structure](#spatial-structure)
-  * [Geometry conversion](#geometry-conversion)
-  * [Georeferencing](#georeferencing)
+    * [Project description](#project-description)
+    * [Getting started](#getting-started)
+    * [Getting started (Development)](#getting-started-development)
+    * [Configuration](#configuration)
+        * [LOD](#lod)
+        * [IFC Product Configuration](#ifc-product-configuration)
+        * [Property and attribute mapping](#property-and-attribute-mapping)
+        * [Technical documentation](#technical-documentation)
+    * [Volumetric Modeling](#volumetric-modeling)
+    * [Coordinate Reference Systems](#coordinate-reference-systems)
+    * [Spatial Structure](#spatial-structure)
+    * [Geometry conversion](#geometry-conversion)
+    * [Georeferencing](#georeferencing)
 * [References](#references)
+
 <!-- TOC -->
 
 ## Project description
@@ -67,8 +69,8 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 ## Configuration
 
-The conversion process is managed through a configuration file that defines the **Level of detail** and which **IFC
-entities**, **Attributes** and **PropertySets** are included in the conversion.
+The tool is configured through a YAML file that defines the **level of detail** and specifies the **IFC entities**,
+**attributes** and **property sets** to be considered during the conversion process.
 
 ### LOD
 
@@ -139,13 +141,13 @@ The converter automatically recognizes spatial structures defined within the IFC
 * **Buildings:** `IfcBuildingStorey` structures are identified.
 * **Bridges:** `IfcBridgePart` structures are identified.
 
-During the conversion, nested spatial hierarchies are flattened into a single level to ensure compatibility with
-CityGML, which, in contrast to IFC, does not support nested hierarchical spatial structures.
+Any nested spatial hierarchies are flattened into a single level to ensure compatibility with CityGML, which, in
+contrast to IFC, does not support nested hierarchical spatial structures.
 
 ## Geometry conversion
 
-During the process, all IFC geometries are converted into B-Rep representations using IfcOpenShell’s geometry library.
-This conversion step is required because CityGML supports only boundary representation (B-Rep) geometries.
+All IFC geometries are converted into B-Rep representations using IfcOpenShell’s geometry library. This conversion step
+is required because CityGML supports only boundary representation (B-Rep) geometries.
 
 ## Georeferencing
 
