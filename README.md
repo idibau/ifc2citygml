@@ -1,21 +1,23 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
+
 * [3D-GIS-BIM](#3d-gis-bim)
-  * [Project description](#project-description)
-  * [Getting started](#getting-started)
-  * [Getting started (Development)](#getting-started-development)
-  * [Configuration](#configuration)
-    * [LOD](#lod)
-    * [IFC Product Configuration](#ifc-product-configuration)
-    * [Property and attribute mapping](#property-and-attribute-mapping)
-    * [Technical documentation](#technical-documentation)
-  * [Volumetric Modeling](#volumetric-modeling)
-  * [Coordinate Reference Systems](#coordinate-reference-systems)
-  * [Spatial Structure](#spatial-structure)
-  * [Geometry conversion](#geometry-conversion)
-  * [Georeferencing](#georeferencing)
+    * [Project description](#project-description)
+    * [Getting started](#getting-started)
+    * [Getting started (Development)](#getting-started-development)
+    * [Configuration](#configuration)
+        * [LOD](#lod)
+        * [IFC Product Configuration](#ifc-product-configuration)
+        * [Property and attribute mapping](#property-and-attribute-mapping)
+        * [Technical documentation](#technical-documentation)
+    * [Volumetric Modeling](#volumetric-modeling)
+    * [Coordinate Reference Systems](#coordinate-reference-systems)
+    * [Spatial Structure](#spatial-structure)
+    * [Geometry conversion](#geometry-conversion)
+    * [Georeferencing](#georeferencing)
 * [References](#references)
+
 <!-- TOC -->
 
 ## Project description
@@ -164,8 +166,20 @@ georeferencing in IFC.
 - **LO_GEO_REF_50**
     - `IfcMapConversion` defines georeferencing of the "SurveyPoint", including coordinate system parameters
 
-For every supported georeferencing the tool applies a transformation matrix to all geometries in the model, converting
-them from local values into global values.
+For each supported level of georeferencing, the tool derives a corresponding transformation matrix. All geometries are
+transformed from local coordinates to global coordinates by applying these matrices in hierarchical order.
+
+$$
+G_{\text{global}}
+=
+T_{\text{LO_GEO_REF_50}}
+\cdot
+T_{\text{LO_GEO_REF_40}}
+\cdot
+T_{\text{LO_GEO_REF_30}}
+\cdot
+G_{\text{local}}
+$$
 
 ![Level of Georeferencing](assets/logeoref.png)
 
