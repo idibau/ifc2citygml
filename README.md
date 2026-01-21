@@ -73,9 +73,7 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 The conversion process is managed through a configuration file that defines the **Level of detail** and which **IFC
 entities**, **Attributes** and **PropertySets** are included in the conversion.
 
-### Configuration Sections
-
-#### LOD
+### LOD
 
 The configuration begins with the definition of the Level of Detail (LOD). The selected LOD determines the LOD class to
 which all geometrical elements are written and must be manually adapted to fit the to-be-processed IFC file and
@@ -84,7 +82,7 @@ become more detailed with increasing LOD with respect to their geometry.
 
 ![LOD](assets/lod.png)
 
-#### IFC Product Configuration
+### IFC Product Configuration
 
 The rest of the configuration is divided into four sections, which are processed sequentially. This defined order
 guarantees predictable and consistent conversion behavior. Once an IFC product has been handled by a configuration, it
@@ -97,7 +95,7 @@ will not be considered again by any later configurations.
 4. **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three
    sections.
 
-#### Property and attribute mapping
+### Property and attribute mapping
 
 For each entity defined in the configuration, you can specify which **Properties** and **Attributes** should be
 transferred. The properties are automatically mapped to **Generic Attribute Sets**. The attributes are mapped to
@@ -106,27 +104,6 @@ transferred. The properties are automatically mapped to **Generic Attribute Sets
 Use this notation to configure the properties: pset_name.property_name
 
 The **Name** and **Description** attributes are automatically considered and must not be specified explicitly.
-
-### Volumetric Modeling
-
-The resulting CityGML model does not use surface-based entities. Instead, geometries are written as volumetric
-construction elements, installations, rooms, and furniture. This modeling approach is enabled by CityGML 3.0, which
-introduces dedicated volumetric entities beyond the surface representations.
-
-### Coordinate Reference Systems
-
-If the IFC file contains an `IfcCoordinateReferenceSystem`, the corresponding EPSG code is automatically transferred to
-the CityGML file. Therefore, the EPSG code does not need to be configured manually.
-
-### Spatial Structure
-
-The converter automatically recognizes spatial structures defined within the IFC file:
-
-* **Buildings:** `IfcBuildingStorey` structures are identified.
-* **Bridges:** `IfcBridgePart` structures are identified.
-
-During the conversion, nested spatial hierarchies are flattened into a single level to ensure compatibility with
-CityGML, which, in contrast to IFC, does not support nested hierarchical spatial structures.
 
 ### Technical documentation
 
@@ -146,6 +123,27 @@ Generate markdown with [jsonschema-markdown](https://pypi.org/project/jsonschema
 ```
 jsonschema-markdown configuration.json > configuration_schema.md --no-empty-columns
 ```
+
+## Volumetric Modeling
+
+The resulting CityGML model does not use surface-based entities. Instead, geometries are written as volumetric
+construction elements, installations, rooms, and furniture. This modeling approach is enabled by CityGML 3.0, which
+introduces dedicated volumetric entities beyond the surface representations.
+
+## Coordinate Reference Systems
+
+If the IFC file contains an `IfcCoordinateReferenceSystem`, the corresponding EPSG code is automatically transferred to
+the CityGML file. Therefore, the EPSG code does not need to be configured manually.
+
+## Spatial Structure
+
+The converter automatically recognizes spatial structures defined within the IFC file:
+
+* **Buildings:** `IfcBuildingStorey` structures are identified.
+* **Bridges:** `IfcBridgePart` structures are identified.
+
+During the conversion, nested spatial hierarchies are flattened into a single level to ensure compatibility with
+CityGML, which, in contrast to IFC, does not support nested hierarchical spatial structures.
 
 ## Geometry conversion
 
