@@ -133,7 +133,7 @@ introduces dedicated volumetric entities beyond the surface representations.
 ## Coordinate Reference Systems
 
 If the IFC file contains an `IfcCoordinateReferenceSystem`, the corresponding EPSG code is automatically transferred to
-the CityGML file. Therefore, the EPSG code does not need to be configured manually.
+the CityGML file.
 
 ## Spatial Structure
 
