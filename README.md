@@ -172,11 +172,11 @@ transformed from local coordinates to global coordinates by applying these matri
 ```math
 G_{global}
 =
-T_{LO_GEO_REF_50}
+T_{LOGEOREF50}
 \cdot
-T_{LO_GEO_REF_40}
+T_{LOGEOREF40}
 \cdot
-T_{LO_GEO_REF_30}
+T_{LOGEOREF30}
 \cdot
 G_{local}
 ```
