@@ -15,7 +15,12 @@ class EntityMapping(BaseModel):
     properties: List[str] = Field(
         default_factory=list,
         json_schema_extra={"default": []},
-        description="A list of properties to be extracted for this entity. ($pset.$property)"
+        description="A list of properties to be extracted for this entity. (pset_name.property_name)"
+    )
+    attributes: Optional[List[str]] = Field(
+        default_factory=list,
+        json_schema_extra={"default": []},
+        description="A list of attributes to be extracted for this entity."
     )
 
 
