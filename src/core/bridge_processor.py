@@ -33,7 +33,7 @@ class BridgeProcessor:
             ifc_products_by_bridge_id[bridge_id].append(ifc_product)
 
         number_of_bridges = len(ifc_bridges_by_id)
-        for bridge_index, bridge_id, ifc_bridge in enumerate(ifc_bridges_by_id.items()):
+        for bridge_index, (bridge_id, ifc_bridge) in enumerate(ifc_bridges_by_id.items()):
             logger.debug(f"Processing {bridge_index + 1}/{number_of_bridges} bridge element")
 
             bridge_part_by_id = {}

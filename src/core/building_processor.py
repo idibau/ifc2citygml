@@ -33,7 +33,7 @@ class BuildingProcessor:
             ifc_products_by_building_id[building_id].append(ifc_product)
 
         number_of_buildings = len(ifc_buildings_by_id)
-        for building_index, building_id, ifc_building in enumerate(ifc_buildings_by_id.items()):
+        for building_index, (building_id, ifc_building) in enumerate(ifc_buildings_by_id.items()):
             logger.debug(f"Processing {building_index + 1}/{number_of_buildings} building element...")
 
             storeys_by_id = {}

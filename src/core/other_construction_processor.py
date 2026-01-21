@@ -3,7 +3,7 @@ import logging
 import numpy as np
 
 from model.solid import Solid
-from utils.geometry import extract_geometry, get_min_max_from_vertices
+from utils.geometry import get_min_max_from_vertices, extract_geometry
 from utils.ifc_mapper import map_to_other_construction_entity
 
 logger = logging.getLogger(__name__)
@@ -29,10 +29,10 @@ class OtherConstructionProcessor:
             if not feature:
                 continue
 
-            geo_data = extract_geometry(ifc_product)
-            if not geo_data:
+            geometry = extract_geometry(ifc_product)
+            if not geometry:
                 continue
-            faces, vertices = geo_data
+            faces, vertices = geometry
 
             self._update_envelope(vertices)
 

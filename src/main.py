@@ -2,6 +2,7 @@ import argparse
 import logging
 import pathlib
 import sys
+from datetime import datetime
 
 import ifcopenshell
 
@@ -25,6 +26,9 @@ def main():
     parser.add_argument("input", type=pathlib.Path, help="Path to the input IFC file")
     parser.add_argument("output", type=pathlib.Path, help="Path to the output GML file")
     args = parser.parse_args()
+
+    file_handler = logging.FileHandler(f"{datetime.now().isoformat()}.log")
+    root_logger.addHandler(file_handler)
 
     logger.info(f"Reading IFC: {args.input}")
     model = ifcopenshell.open(str(args.input))

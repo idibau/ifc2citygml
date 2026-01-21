@@ -63,9 +63,7 @@ bridge_mapping:
     - entity: "IfcWindow"
 
 other_construction_mapping:
-  -  entity: "IfcDistributionFlowElement"
-     properties:
-       - "CHSIA_LKMap.Lagebestimmung"
+  - entity: "IfcDistributionFlowElement"
 
 generic_mapping:
-  -  entity: "IfcSpace"
+  - entity: "IfcSpace"

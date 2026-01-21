@@ -1,4 +1,5 @@
 import logging
+
 import numpy as np
 
 from core.bridge_processor import BridgeProcessor
@@ -53,15 +54,14 @@ def convert(model, document, config):
     other_construction_proc.process(products_other_construction, config, document)
     generic_proc.process(products_generic, config, document)
 
-    envelope_points = np.array([point for point in
-                                [building_proc.envelope_max, bridge_proc.envelope_max,
-                                 other_construction_proc.envelope_max, generic_proc.envelope_max,
-                                 building_proc.envelope_min, bridge_proc.envelope_min,
-                                 other_construction_proc.envelope_min, generic_proc.envelope_min] if
-                                point is not None])
-    min_point, max_point = get_min_max_from_vertices(envelope_points)
-    if min_point is not None and max_point is not None:
-        document.add_envelope(min_point, max_point)
+    envelope_points = [point for point in
+                       [building_proc.envelope_max, bridge_proc.envelope_max, other_construction_proc.envelope_max,
+                        generic_proc.envelope_max, building_proc.envelope_min, bridge_proc.envelope_min,
+                        other_construction_proc.envelope_min, generic_proc.envelope_min] if point is not None]
+    if len(envelope_points) > 0:
+        min_point, max_point = get_min_max_from_vertices(np.array(envelope_points))
+        if min_point is not None and max_point is not None:
+            document.add_envelope(min_point, max_point)
 
     return document
 
