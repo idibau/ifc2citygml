@@ -69,8 +69,8 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 ## Configuration
 
-The tool is configured through a YAML file that defines the **level of detail** and specifies the **IFC entities**,
-**attributes** and **property sets** to be considered during the conversion process.
+The tool is configured through a YAML file that defines the level of detail and specifies the mapping of IFC
+entities to CityGML classes.
 
 ### LOD
 
