@@ -169,17 +169,18 @@ georeferencing in IFC.
 For each supported level of georeferencing, the tool derives a corresponding transformation matrix. All geometries are
 transformed from local coordinates to global coordinates by applying these matrices in hierarchical order.
 
-$$
-G_{\text{global}}
+```math
+G_{global}
 =
-T_{\text{LO\_GEO\_REF\_50}}
+T_{LO_GEO_REF_50}
 \cdot
-T_{\text{LO\_GEO\_REF\_40}}
+T_{LO_GEO_REF_40}
 \cdot
-T_{\text{LO\_GEO\_REF\_30}}
+T_{LO_GEO_REF_30}
 \cdot
-G_{\text{local}}
+G_{local}
 $$
+```
 
 ![Level of Georeferencing](assets/logeoref.png)
 
