@@ -1,24 +1,21 @@
 # 3D-GIS-BIM
 
 <!-- TOC -->
-
 * [3D-GIS-BIM](#3d-gis-bim)
-    * [Project description](#project-description)
-    * [Getting started](#getting-started)
-    * [Getting started (Development)](#getting-started-development)
-    * [Configuration](#configuration)
-        * [Configuration Sections](#configuration-sections)
-            * [LOD](#lod)
-            * [IFC Product Configuration](#ifc-product-configuration)
-            * [Volumetric Modeling](#volumetric-modeling)
-            * [Coordinate Reference Systems](#coordinate-reference-systems)
-        * [Spatial Structure](#spatial-structure)
-        * [Property and attribute mapping](#property-and-attribute-mapping)
-        * [Technical documentation](#technical-documentation)
-    * [Geometry conversion](#geometry-conversion)
-    * [Georeferencing](#georeferencing)
+  * [Project description](#project-description)
+  * [Getting started](#getting-started)
+  * [Getting started (Development)](#getting-started-development)
+  * [Configuration](#configuration)
+    * [LOD](#lod)
+    * [IFC Product Configuration](#ifc-product-configuration)
+    * [Property and attribute mapping](#property-and-attribute-mapping)
+    * [Technical documentation](#technical-documentation)
+  * [Volumetric Modeling](#volumetric-modeling)
+  * [Coordinate Reference Systems](#coordinate-reference-systems)
+  * [Spatial Structure](#spatial-structure)
+  * [Geometry conversion](#geometry-conversion)
+  * [Georeferencing](#georeferencing)
 * [References](#references)
-
 <!-- TOC -->
 
 ## Project description
