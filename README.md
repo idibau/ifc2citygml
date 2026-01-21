@@ -82,8 +82,8 @@ become more detailed with increasing LOD with respect to their geometry.
 ### IFC Product Configuration
 
 The IFC product configuration is divided into four sections. Each section specifies a CityGML class and defines which
-IFC entities, attributes, and property sets are mapped to it. The sections are processed sequentially. This defined
-order guarantees predictable and consistent conversion behavior.
+**IFC entities**, **attributes**, and **properties** are mapped to it. The sections are processed sequentially. This
+defined order guarantees predictable and consistent conversion behavior.
 
 1. **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
 2. **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
