@@ -166,6 +166,8 @@ georeferencing in IFC.
 - **LO_GEO_REF_50**
     - `IfcMapConversion` defines georeferencing of the "SurveyPoint", including coordinate system parameters
 
+![Level of Georeferencing](assets/logeoref.png)
+
 For each supported level of georeferencing, the tool derives a corresponding transformation matrix. All geometries are
 transformed from local coordinates to global coordinates by applying these matrices in hierarchical order.
 
@@ -180,8 +182,6 @@ T_{LOGEOREF30}
 \cdot
 G_{local}
 ```
-
-![Level of Georeferencing](assets/logeoref.png)
 
 # References
 
