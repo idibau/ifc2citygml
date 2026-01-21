@@ -20,9 +20,11 @@ class Document:
         name_el.text = self.city_model_name
         self.xf_ctx.write(name_el, pretty_print=True)
 
-    def add_envelope(self, min_corner, max_corner):
+    def add_envelope(self, min_corner, max_corner, srs_name):
         bounded_by = create_element("gml", "boundedBy")
         envelope = create_sub_element(bounded_by, "gml", "Envelope")
+        if srs_name:
+            envelope.set("srsName", srs_name)
         lower_corner = create_sub_element(envelope, "gml", "lowerCorner")
         lower_corner.text = point_to_string(min_corner)
         upper_corner = create_sub_element(envelope, "gml", "upperCorner")
