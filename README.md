@@ -97,13 +97,23 @@ will not be considered again by any later configurations.
 4. **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three
    sections.
 
-#### Volumetric Modeling
+#### Property and attribute mapping
+
+For each entity defined in the configuration, you can specify which **Properties** and **Attributes** should be
+transferred. The properties are automatically mapped to **Generic Attribute Sets**. The attributes are mapped to
+**Generic Attributes**. Properties and attributes that cannot be found are ignored.
+
+Use this notation to configure the properties: pset_name.property_name
+
+The **Name** and **Description** attributes are automatically considered and must not be specified explicitly.
+
+### Volumetric Modeling
 
 The resulting CityGML model does not use surface-based entities. Instead, geometries are written as volumetric
 construction elements, installations, rooms, and furniture. This modeling approach is enabled by CityGML 3.0, which
 introduces dedicated volumetric entities beyond the surface representations.
 
-#### Coordinate Reference Systems
+### Coordinate Reference Systems
 
 If the IFC file contains an `IfcCoordinateReferenceSystem`, the corresponding EPSG code is automatically transferred to
 the CityGML file. Therefore, the EPSG code does not need to be configured manually.
@@ -117,16 +127,6 @@ The converter automatically recognizes spatial structures defined within the IFC
 
 During the conversion, nested spatial hierarchies are flattened into a single level to ensure compatibility with
 CityGML, which, in contrast to IFC, does not support nested hierarchical spatial structures.
-
-### Property and attribute mapping
-
-For each entity defined in the configuration, you can specify which **Properties** and **Attributes** should be
-transferred. The properties are automatically mapped to **Generic Attribute Sets**. The attributes are mapped to
-**Generic Attributes**. Properties and attributes that cannot be found are ignored.
-
-Use this notation to configure the properties: pset_name.property_name
-
-The **Name** and **Description** attributes are automatically considered and must not be specified explicitly.
 
 ### Technical documentation
 
