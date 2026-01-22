@@ -85,11 +85,23 @@ The IFC product configuration is divided into four sections. Each section specif
 **IFC entities**, **attributes**, and **properties** are mapped to it. The sections are processed sequentially. This
 defined order guarantees predictable and consistent conversion behavior.
 
-1. **Building Configuration:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
-2. **Bridge Configuration:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
-3. **Other Construction Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous
-   two sections.
-4. **Generic Configuration:** Targets all other `IfcProduct` entities that were not processed by the previous three
+1. **Building Mapping:** Targets all `IfcProduct` entities associated with an `IfcBuilding`. 
+   - BuildingConstructiveElement 
+   - BuildingInstallation 
+   - BuildingFurniture 
+   - BuildingRoom 
+   - Door 
+   - Window
+2. **Bridge Mapping:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
+   - BridgeConstructiveElement 
+   - BridgeInstallation 
+   - BridgeFurniture 
+   - BridgeRoom 
+   - Door 
+   - Window
+3. **Other Construction Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous
+two sections.
+4. **Generic Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous three
    sections.
 
 Note: Once an IFC product has been handled by a configuration, it will not be considered again by any later
