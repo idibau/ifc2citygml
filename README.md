@@ -23,7 +23,7 @@
 This prototype was developed as part of a project commissioned by the Canton of Basel-Landschaft to the Fachhochschule
 Nordwestschweiz. The tool allows the visualization of IFC data in a 3D GIS format by converting IFC files into CityGML.
 Its functionality includes the conversion of spatial structures for buildings and bridges, as well as the conversion of
-spatially unstructured elements.
+spatially unstructured elements. Supported are IFC versions 4 and 4.3.
 
 ## Getting started
 
@@ -85,22 +85,22 @@ The IFC product configuration is divided into four sections. Each section specif
 **IFC entities**, **attributes**, and **properties** are mapped to it. The sections are processed sequentially. This
 defined order guarantees predictable and consistent conversion behavior.
 
-1. **Building Mapping:** Targets all `IfcProduct` entities associated with an `IfcBuilding`. 
-   - BuildingConstructiveElement 
-   - BuildingInstallation 
-   - BuildingFurniture 
-   - BuildingRoom 
-   - Door 
-   - Window
+1. **Building Mapping:** Targets all `IfcProduct` entities associated with an `IfcBuilding`.
+    - BuildingConstructiveElement
+    - BuildingInstallation
+    - BuildingFurniture
+    - BuildingRoom
+    - Door
+    - Window
 2. **Bridge Mapping:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
-   - BridgeConstructiveElement 
-   - BridgeInstallation 
-   - BridgeFurniture 
-   - BridgeRoom 
-   - Door 
-   - Window
+    - BridgeConstructiveElement
+    - BridgeInstallation
+    - BridgeFurniture
+    - BridgeRoom
+    - Door
+    - Window
 3. **Other Construction Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous
-two sections.
+   two sections.
 4. **Generic Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous three
    sections.
 
@@ -115,7 +115,8 @@ transferred. The properties are automatically mapped to **Generic Attribute Sets
 
 Use this notation to configure the properties: pset_name.property_name
 
-The **Name** and **Description** attributes are automatically considered and must not be specified explicitly.
+The **Name** and **Description** attributes are automatically considered and must not be specified explicitly. The same 
+applies to the **EntityType**, **PredefinedType**, and **ObjectType**.
 
 ### Technical documentation
 
