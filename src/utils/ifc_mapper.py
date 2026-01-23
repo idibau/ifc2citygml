@@ -72,11 +72,6 @@ def map_to_building_entity(ifc_element, config):
 
     ifc_entity = ifc_element.is_a()
 
-    if ifc_entity == "IfcDoor":
-        return Door(ifc_element)
-    if ifc_entity == "IfcWindow":
-        return Window(ifc_element)
-
     if ifc_entity in {e.entity for e in mapping.building_room}:
         feature = BuildingRoom(ifc_element)
         return _attach_psets_and_attributes(ifc_element, feature, mapping.building_room, ifc_entity)
