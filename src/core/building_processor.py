@@ -85,11 +85,12 @@ class BuildingProcessor:
                     else:
                         building.add_building_feature(feature)
 
-            for open_id, fill_id in filling_opening_mapping_by_id.items():
-                filling = features_by_id.get(fill_id)
-                opening = features_by_id.get(open_id)
-                if isinstance(filling, Filling) and isinstance(opening, BuildingConstructiveElement):
-                    opening.add_filling(filling)
+            for open_id, fill_ids in filling_opening_mapping_by_id.items():
+                for fill_id in fill_ids:
+                    filling = features_by_id.get(fill_id)
+                    opening = features_by_id.get(open_id)
+                    if isinstance(filling, Filling) and isinstance(opening, BuildingConstructiveElement):
+                        opening.add_filling(filling)
 
             document.add_building(building)
 
