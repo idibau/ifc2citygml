@@ -37,7 +37,7 @@ def create_class_value(ifc_element):
     object_type = getattr(ifc_element, "ObjectType", None)
     predefined_type = getattr(ifc_element, "PredefinedType", None)
     class_value = ifc_element.is_a()
-    if predefined_type:
+    if predefined_type and predefined_type != "USERDEFINED":
         return f"{class_value}/{predefined_type}"
     elif object_type:
         return f"{class_value}/{object_type}"
