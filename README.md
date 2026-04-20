@@ -8,6 +8,7 @@
   * [Configuration](#configuration)
     * [LOD](#lod)
     * [IFC Product Configuration](#ifc-product-configuration)
+    * [Predefined Type and Object Type Mapping](#predefined-type-and-object-type-mapping)
     * [Property and attribute mapping](#property-and-attribute-mapping)
     * [Technical documentation](#technical-documentation)
   * [Volumetric Modeling](#volumetric-modeling)
@@ -107,10 +108,15 @@ defined order guarantees predictable and consistent conversion behavior.
 Note: Once an IFC product has been handled by a configuration, it will not be considered again by any later
 configurations.
 
+### Predefined Type and Object Type Mapping
+
+For each entity defined in the configuration, you can optionally specify a **PredefinedType** and/or an **ObjectType**.
+These act as additional filter to be able to distinguish between different types of the same entity.
+
 ### Property and attribute mapping
 
-For each entity defined in the configuration, you can specify which **Properties** and **Attributes** should be
-transferred. The properties are automatically mapped to **Generic Attribute Sets**. The attributes are mapped to
+For each entity defined in the configuration, you can optionally specify which **Properties** and **Attributes** should 
+be transferred. The properties are automatically mapped to **Generic Attribute Sets**. The attributes are mapped to
 **Generic Attributes**. Properties and attributes that cannot be found are ignored.
 
 Use this notation to configure the properties: pset_name.property_name

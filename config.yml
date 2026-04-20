@@ -67,3 +67,16 @@ other_construction_mapping:
 
 generic_mapping:
   - entity: "IfcSpace"
+
+# Example configuration with predefined type, object type, properties and attributes
+#
+# building_mapping:
+#   building_constructive_element:
+#    - entity: "IfcWall"
+#      predefined_type: "USERDEFINED"
+#      object_type: "PARTITIONING"
+#      properties:
+#        - "Pset_WallCommon.IsExternal"
+#        - "Pset_WallCommon.LoadBearing"
+#      attributes:
+#        - "Tag"

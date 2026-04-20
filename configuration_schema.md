@@ -54,11 +54,13 @@ Defines the mapping between an IFC entity and its associated property sets.
 
 #### Type: `object`
 
-| Property   | Type | Required | Possible values | Default | Description                                                                    |
-|------------| ---- | -------- | --------------- | ------- |--------------------------------------------------------------------------------|
-| entity     | `string` | ✅ | string |  | The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam').                     |
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| entity | `string` | ✅ | string |  | The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam'). |
+| predefined_type | `string` or `null` |  | string | `null` | The predefined type of the entity. |
+| object_type | `string` or `null` |  | string | `null` | The object type of the IFC entity. |
 | properties | `array` |  | string | `[]` | A list of properties to be extracted for this entity. (pset_name.property_name) |
-| attributes | `array` |  | string | `[]` | A list of attributes to be extracted for this entity. |
+| attributes | `array` or `null` |  | string | `[]` | A list of attributes to be extracted for this entity. |
 
 ## Lod
 

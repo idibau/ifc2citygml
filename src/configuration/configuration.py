@@ -12,6 +12,8 @@ class EntityMapping(BaseModel):
     Defines the mapping between an IFC entity and its associated property sets.
     """
     entity: str = Field(..., description="The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam').")
+    predefined_type: Optional[str] = Field(None, description="The predefined type of the entity.")
+    object_type: Optional[str] = Field(None, description="The object type of the IFC entity.")
     properties: List[str] = Field(
         default_factory=list,
         json_schema_extra={"default": []},
