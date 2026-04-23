@@ -168,8 +168,8 @@ def filter_ifc_element(ifc_element, entity_mappings):
 
     for e in entity_mappings:
         if (ifc_entity == e.entity and
-                (predefined_type is None or predefined_type == e.predefined_type) and
-                (object_type is None or object_type == e.object_type)):
+                (e.predefined_type is None or predefined_type == e.predefined_type) and
+                (e.object_type is None or object_type == e.object_type)):
             return True
 
     return False
