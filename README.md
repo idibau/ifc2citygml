@@ -91,19 +91,22 @@ defined order guarantees predictable and consistent conversion behavior.
     - BuildingInstallation
     - BuildingFurniture
     - BuildingRoom
-    - Door
-    - Window
+    - Door*
+    - Window*
 2. **Bridge Mapping:** Targets all `IfcProduct` entities associated with an `IfcBridge`.
     - BridgeConstructiveElement
     - BridgeInstallation
     - BridgeFurniture
     - BridgeRoom
-    - Door
-    - Window
+    - Door*
+    - Window*
 3. **Other Construction Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous
    two sections.
 4. **Generic Mapping:** Targets all other `IfcProduct` entities that were not processed by the previous three
    sections.
+
+*Implies that there is a correct IFC mapping using the FillsVoids relation. If this can not be guaranteed, the door and
+window entities can be inlcuded in the constructive, installation, furniture or room mapping.
 
 Note: Once an IFC product has been handled by a configuration, it will not be considered again by any later
 configurations.
