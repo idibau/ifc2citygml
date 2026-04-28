@@ -4,7 +4,7 @@ import numpy as np
 
 from model.solid import Solid
 from utils.geometry import get_min_max_from_vertices, extract_geometry
-from utils.ifc_mapper import map_to_other_construction_entity
+from utils.ifc_mapper import map_to_other_construction_feature
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class OtherConstructionProcessor:
             if not getattr(ifc_product, "Representation", None):
                 continue
 
-            feature = map_to_other_construction_entity(ifc_product, config)
+            feature = map_to_other_construction_feature(ifc_product, config)
             if not feature:
                 continue
 

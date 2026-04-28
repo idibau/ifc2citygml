@@ -17,11 +17,10 @@ from model.window import Window
 from utils.ifc_utils import get_pset
 
 
-def _attach_psets_and_attributes(ifc_element, feature, entity_mapping_list, ifc_entity):
-    mapping_entry = next((e for e in entity_mapping_list if e.entity == ifc_entity), None)
-    if mapping_entry:
+def attach_psets_and_attributes(ifc_element, feature, generic_attributes):
+    if generic_attributes:
         properties_by_psets = defaultdict(list)
-        for item in mapping_entry.properties:
+        for item in generic_attributes.properties:
             pset, property_name = item.split(".", 1)
             properties_by_psets[pset].append(property_name)
 
@@ -36,12 +35,20 @@ def _attach_psets_and_attributes(ifc_element, feature, entity_mapping_list, ifc_
                 if generic_attribute_set:
                     feature.add_generic_attribute(generic_attribute_set)
 
-        for item in mapping_entry.attributes:
+        for item in generic_attributes.attributes:
             attribute = getattr(ifc_element, item, None)
             if attribute is not None:
                 feature.add_generic_attribute(_create_generic_attribute(item, attribute))
 
     return feature
+
+
+def _resolve_and_attach_psets_and_attributes(ifc_element, feature, entity_mapping_list, ifc_entity):
+    mapping = next((e for e in entity_mapping_list if e.entity == ifc_entity), None)
+    if mapping:
+        return attach_psets_and_attributes(ifc_element, feature, mapping.generic_attributes)
+    else:
+        return feature
 
 
 def _map_ifc_pset(pset_name, pset):
@@ -65,7 +72,7 @@ def _create_generic_attribute(key, value):
         return StringAttribute(key, str(value))
 
 
-def map_to_building_entity(ifc_element, config):
+def map_to_building_feature(ifc_element, config):
     mapping = config.building_mapping
     if not mapping:
         return None
@@ -74,32 +81,33 @@ def map_to_building_entity(ifc_element, config):
 
     if filter_ifc_element(ifc_element, mapping.building_constructive_element):
         feature = BuildingConstructiveElement(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.building_constructive_element, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.building_constructive_element,
+                                                        ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.building_installation):
         feature = BuildingInstallation(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.building_installation, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.building_installation, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.building_furniture):
         feature = BuildingFurniture(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.building_furniture, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.building_furniture, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.building_room):
         feature = BuildingRoom(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.building_room, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.building_room, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.door):
         feature = Door(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.window):
         feature = Window(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
 
     return None
 
 
-def map_to_bridge_entity(ifc_element, config):
+def map_to_bridge_feature(ifc_element, config):
     mapping = config.bridge_mapping
     if not mapping:
         return None
@@ -108,32 +116,33 @@ def map_to_bridge_entity(ifc_element, config):
 
     if filter_ifc_element(ifc_element, mapping.bridge_constructive_element):
         feature = BridgeConstructiveElement(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.bridge_constructive_element, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.bridge_constructive_element,
+                                                        ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.bridge_installation):
         feature = BridgeInstallation(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.bridge_installation, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.bridge_installation, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.bridge_furniture):
         feature = BridgeFurniture(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.bridge_furniture, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.bridge_furniture, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.bridge_room):
         feature = BridgeRoom(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.bridge_room, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.bridge_room, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.door):
         feature = Door(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
 
     if filter_ifc_element(ifc_element, mapping.window):
         feature = Window(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping.door, ifc_entity)
 
     return None
 
 
-def map_to_other_construction_entity(ifc_element, config):
+def map_to_other_construction_feature(ifc_element, config):
     mapping = config.other_construction_mapping
     if not mapping:
         return None
@@ -142,12 +151,12 @@ def map_to_other_construction_entity(ifc_element, config):
 
     if filter_ifc_element(ifc_element, mapping):
         feature = OtherConstruction(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping, ifc_entity)
 
     return None
 
 
-def map_to_generic_entity(ifc_element, config):
+def map_to_generic_feature(ifc_element, config):
     mapping = config.generic_mapping
     if not mapping:
         return None
@@ -156,7 +165,7 @@ def map_to_generic_entity(ifc_element, config):
 
     if filter_ifc_element(ifc_element, mapping):
         feature = GenericOccupiedSpace(ifc_element)
-        return _attach_psets_and_attributes(ifc_element, feature, mapping, ifc_entity)
+        return _resolve_and_attach_psets_and_attributes(ifc_element, feature, mapping, ifc_entity)
 
     return None
 

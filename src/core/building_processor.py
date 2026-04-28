@@ -1,7 +1,6 @@
 import logging
-from collections import defaultdict
-
 import numpy as np
+from collections import defaultdict
 
 from model.building.building import Building
 from model.building.building_constructive_element import BuildingConstructiveElement
@@ -9,7 +8,7 @@ from model.building.storey import Storey
 from model.filling import Filling
 from model.solid import Solid
 from utils.geometry import extract_geometry, get_min_max_from_vertices
-from utils.ifc_mapper import map_to_building_entity
+from utils.ifc_mapper import map_to_building_feature, attach_psets_and_attributes
 from utils.ifc_utils import get_building_storey, get_opening_element
 
 logger = logging.getLogger(__name__)
@@ -41,6 +40,7 @@ class BuildingProcessor:
             filling_opening_mapping_by_id = defaultdict(list)
 
             building = Building(ifc_building)
+            attach_psets_and_attributes(ifc_building, building, config.building_mapping.building_attributes)
 
             number_of_building_products = len(ifc_products_by_building_id[building_id])
             for index, ifc_product in enumerate(ifc_products_by_building_id[building_id]):
@@ -51,7 +51,7 @@ class BuildingProcessor:
                 if not getattr(ifc_product, "Representation", None):
                     continue
 
-                feature = map_to_building_entity(ifc_product, config)
+                feature = map_to_building_feature(ifc_product, config)
                 if not feature:
                     continue
                 else:
@@ -79,6 +79,8 @@ class BuildingProcessor:
                         storey_id = getattr(ifc_storey, "GlobalId")
                         if storey_id not in storeys_by_id:
                             storeys_by_id[storey_id] = Storey(ifc_storey)
+                            attach_psets_and_attributes(ifc_storey, storeys_by_id[storey_id],
+                                                        config.building_mapping.storey_attributes)
                             building.add_storey(storeys_by_id[storey_id])
                         storey = storeys_by_id[storey_id]
                         storey.add_building_feature(feature)

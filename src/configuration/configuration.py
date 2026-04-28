@@ -7,106 +7,120 @@ from typing import List, Optional
 from configuration.lod import Lod
 
 
-class EntityMapping(BaseModel):
+class GenericAttributeMapping(BaseModel):
     """
-    Defines the mapping between an IFC entity and its associated property sets.
+    Specifies the mapping of generic attributes based on IFC properties and IFC attributes.
     """
-    entity: str = Field(..., description="The name of the IFC entity (e.g., 'IfcWall' or 'IfcBeam').")
-    predefined_type: Optional[str] = Field(None, description="The predefined type of the entity.")
-    object_type: Optional[str] = Field(None, description="The object type of the IFC entity.")
     properties: List[str] = Field(
         default_factory=list,
         json_schema_extra={"default": []},
-        description="A list of properties to be extracted for this entity. (pset_name.property_name)"
+        description="A list of IFC properties to be extracted. (pset_name.property_name)"
     )
-    attributes: Optional[List[str]] = Field(
+    attributes: List[str] = Field(
         default_factory=list,
         json_schema_extra={"default": []},
-        description="A list of attributes to be extracted for this entity."
+        description="A list of IFC attributes to be extracted."
     )
+
+
+class FeatureMapping(BaseModel):
+    """
+    Specifies the mapping of features based on specific IFC elements.
+    """
+    entity: str = Field(..., description="The IFC entity of the element (e.g., 'IfcWall' or 'IfcBeam').")
+    predefined_type: Optional[str] = Field(None, description="The predefined type of the element.")
+    object_type: Optional[str] = Field(None, description="The object type of the IFC element.")
+    generic_attributes: Optional[GenericAttributeMapping] = Field(None, description="Mapping of generic attributes.")
 
 
 class BuildingMapping(BaseModel):
     """
-    Configuration for mapping IFC elements connected to IfcBuildings to CityGML building components.
+    Specifies the mapping of buildings based on IFC elements connected to IfcBuildings.
     """
-    building_constructive_element: List[EntityMapping] = Field(
+    building_attributes: Optional[GenericAttributeMapping] = Field(None,
+                                                                 description="Mapping of building attributes.")
+    storey_attributes: Optional[GenericAttributeMapping] = Field(None,
+                                                             description="Mapping of storey attributes.")
+    building_constructive_element: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for structural building elements such as walls, slabs, or columns."
+        description="Mapping of structural building elements such as walls, slabs, or columns."
     )
-    building_installation: List[EntityMapping] = Field(
+    building_installation: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for building installations and fixed technical equipment."
+        description="Mapping of building installations and fixed technical equipment."
     )
-    building_furniture: List[EntityMapping] = Field(
+    building_furniture: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for furniture."
+        description="Mapping of furniture."
     )
-    building_room: List[EntityMapping] = Field(
+    building_room: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for spatial units and rooms."
+        description="Mapping of spatial units and rooms."
     )
-    door: List[EntityMapping] = Field(
+    door: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for doors."
+        description="Mapping of doors."
     )
-    window: List[EntityMapping] = Field(
+    window: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for windows."
+        description="Mapping of windows."
     )
 
 
 class BridgeMapping(BaseModel):
     """
-    Configuration for mapping IFC elements connected to IfcBridges to CityGML bridge components.
+    Specifies the mapping of bridges based on IFC elements connected to IfcBridges.
     """
-    bridge_constructive_element: List[EntityMapping] = Field(
+    bridge_attributes: Optional[GenericAttributeMapping] = Field(None,
+                                                                 description="Mapping of bridge attributes.")
+    bridge_part_attributes: Optional[GenericAttributeMapping] = Field(None,
+                                                             description="Mapping of bridge part attributes.")
+    bridge_constructive_element: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for structural bridge elements like piers, abutments, or decks."
+        description="Mapping of structural bridge elements like piers, abutments, or decks."
     )
-    bridge_installation: List[EntityMapping] = Field(
+    bridge_installation: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for bridge installations such as drainage systems or lighting."
+        description="Mapping of bridge installations such as drainage systems or lighting."
     )
-    bridge_furniture: List[EntityMapping] = Field(
+    bridge_furniture: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for bridge furniture like railings or signs."
+        description="Mapping of bridge furniture like railings or signs."
     )
-    bridge_room: List[EntityMapping] = Field(
+    bridge_room: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for enclosed spaces."
+        description="Mapping of enclosed spaces."
     )
-    door: List[EntityMapping] = Field(
+    door: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for doors."
+        description="Mapping of doors."
     )
-    window: List[EntityMapping] = Field(
+    window: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Mapping for windows."
+        description="Mapping of windows."
     )
 
 
 class Configuration(BaseModel):
     """
-    Main configuration class for the IFC-to-CityGML conversion process.
-    Manages the mapping rules for buildings and bridges.
+    Main configuration class of the IFC-to-CityGML conversion process.
     """
     lod: Lod = Field(..., description="The desired CityGML LOD level.")
     building_mapping: Optional[BuildingMapping] = Field(
         None,
-        description="Specific mapping rules for building conversion."
+        description="Specific mapping rules of building elements."
     )
     bridge_mapping: Optional[BridgeMapping] = Field(
         None,
-        description="Specific mapping rules for bridge conversion."
+        description="Specific mapping rules of bridge elements."
     )
-    other_construction_mapping: List[EntityMapping] = Field(
+    other_construction_mapping: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Specific mapping rules for other construction conversion."
+        description="Specific mapping rules of other construction elements."
     )
-    generic_mapping: List[EntityMapping] = Field(
+    generic_mapping: List[FeatureMapping] = Field(
         default_factory=list, json_schema_extra={"default": []},
-        description="Specific mapping rules for generic conversion."
+        description="Specific mapping rules of generic elements."
     )
 
     @classmethod

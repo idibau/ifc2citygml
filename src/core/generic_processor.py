@@ -4,7 +4,7 @@ import numpy as np
 
 from model.solid import Solid
 from utils.geometry import extract_geometry, get_min_max_from_vertices
-from utils.ifc_mapper import map_to_generic_entity
+from utils.ifc_mapper import map_to_generic_feature
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class GenericProcessor:
             if not getattr(ifc_product, "Representation", None):
                 continue
 
-            feature = map_to_generic_entity(ifc_product, config)
+            feature = map_to_generic_feature(ifc_product, config)
             if not feature:
                 continue
 

@@ -9,7 +9,7 @@ from model.bridge.bridge_part import BridgePart
 from model.filling import Filling
 from model.solid import Solid
 from utils.geometry import extract_geometry, get_min_max_from_vertices
-from utils.ifc_mapper import map_to_bridge_entity
+from utils.ifc_mapper import map_to_bridge_feature, attach_psets_and_attributes
 from utils.ifc_utils import get_bridge_part, get_opening_element
 
 logger = logging.getLogger(__name__)
@@ -41,6 +41,7 @@ class BridgeProcessor:
             filling_opening_mapping_by_id = defaultdict(list)
 
             bridge = Bridge(ifc_bridge)
+            attach_psets_and_attributes(ifc_bridge, bridge, config.bridge_mapping.bridge_attributes)
 
             number_of_bridge_products = len(ifc_products_by_bridge_id[bridge_id])
             for index, ifc_product in enumerate(ifc_products_by_bridge_id[bridge_id]):
@@ -51,7 +52,7 @@ class BridgeProcessor:
                 if not getattr(ifc_product, "Representation", None):
                     continue
 
-                feature = map_to_bridge_entity(ifc_product, config)
+                feature = map_to_bridge_feature(ifc_product, config)
                 if not feature:
                     continue
                 else:
@@ -79,6 +80,8 @@ class BridgeProcessor:
                         bridge_part_id = getattr(ifc_bridge_part, "GlobalId")
                         if bridge_part_id not in bridge_part_by_id:
                             bridge_part_by_id[bridge_part_id] = BridgePart(ifc_bridge_part)
+                            attach_psets_and_attributes(ifc_bridge_part, bridge_part_by_id[bridge_part_id],
+                                                        config.bridge_mapping.bridge_part_attributes)
                             bridge.add_bridge_part(bridge_part_by_id[bridge_part_id])
                         bridge_part = bridge_part_by_id[bridge_part_id]
                         bridge_part.add_bridge_feature(feature)
