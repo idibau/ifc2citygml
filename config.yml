@@ -2,147 +2,71 @@ lod: LOD_2
 
 building_mapping:
   building_constructive_element:
-    - entity: "IfcWall"
-      predefined_type: "SOLIDWALL"
-      properties:
-        - "Pset_WallCommon.IsExternal"
-        - "Pset_WallCommon.LoadBearing"
-    - entity: "IfcWall"
-      predefined_type: "PARTITIONING"
-      properties:
-        - "Pset_WallCommon.IsExternal"
-        - "Pset_WallCommon.LoadBearing"
-    - entity: "IfcWall"
-      predefined_type: "PLUMBINGWALL"
-      properties:
-        - "Pset_WallCommon.IsExternal"
-        - "Pset_WallCommon.LoadBearing"
-    - entity: "IfcWall"
-      predefined_type: "PARAPET"
-      properties:
-        - "Pset_WallCommon.IsExternal"
-        - "Pset_WallCommon.LoadBearing"
-    - entity: "IfcRoof"
-      properties:
-        - "Pset_RoofCommon.IsExternal"
-        - "Pset_RoofCommon.LoadBearing"
-    - entity: "IfcColumn"
-      properties:
-        - "Pset_ColumnCommon.IsExternal"
-        - "Pset_ColumnCommon.LoadBearing"
     - entity: "IfcBeam"
-      properties:
-        - "Pset_BeamCommon.IsExternal"
-        - "Pset_BeamCommon.LoadBearing"
-    - entity: "IfcSlab"
-      predefined_type: "FLOOR"
-      properties:
-        - "Pset_SlabCommon.IsExternal"
-        - "Pset_SlabCommon.LoadBearing"
-    - entity: "IfcSlab"
-      predefined_type: "BASESLAB"
-      properties:
-        - "Pset_SlabCommon.IsExternal"
-        - "Pset_SlabCommon.LoadBearing"
-    - entity: "IfcSlab"
-      predefined_type: "ROOF"
-      properties:
-        - "Pset_SlabCommon.IsExternal"
-        - "Pset_SlabCommon.LoadBearing"
+    - entity: "IfcColumn"
     - entity: "IfcFooting"
-      properties:
-        - "Pset_FootingCommon.IsExternal"
-        - "Pset_FootingCommon.LoadBearing"
-    - entity: "IfcSlab"
-      predefined_type: "USERDEFINED"
-      object_type: "BALCONY"
-      properties:
-        - "Pset_SlabCommon.IsExternal"
-        - "Pset_SlabCommon.LoadBearing"
-    - entity: "IfcCovering"
-      predefined_type: "FLOORING"
-      properties:
-        - "Pset_CoveringCommon.IsExternal"
-        - "Pset_CoveringCommon.LoadBearing"
-    - entity: "IfcCovering"
-      predefined_type: "INSULATION"
-      properties:
-        - "Pset_CoveringCommon.IsExternal"
-        - "Pset_CoveringCommon.LoadBearing"
+    - entity: "IfcMember"
+    - entity: "IfcPlate"
+    - entity: "IfcWall"
+    - entity: "IfcWallStandardCase"
+    - entity: "IfcRoof"
     - entity: "IfcCurtainWall"
-      properties:
-        - "Pset_CurtainWallCommon.IsExternal"
-        - "Pset_CurtainWallCommon.LoadBearing"
-    - entity: "IfcRailing"
-      properties:
-        - "Pset_RailingCommon.IsExternal"
-    - entity: "IfcStair"
-      properties:
-        - "Pset_StairCommon.IsExternal"
-    - entity: "IfcRamp"
-      properties:
-        - "Pset_RampCommon.IsExternal"
+    - entity: "IfcSlab"
+    - entity: "IfcCovering"
   building_installation:
-    - entity: "IfcShadingDevice"
-    - entity: "IfcSanitaryTerminal"
-      predefined_type: "BATH"
-    - entity: "IfcSanitaryTerminal"
-      predefined_type: "WASHHANDBASIN"
-    - entity: "IfcSanitaryTerminal"
-      predefined_type: "TOILETPAN"
-    - entity: "IfcSanitaryTerminal"
-      predefined_type: "SHOWER"
-    - entity: "IfcWasteTerminal"
-      predefined_type: "FLOORTRAP"
-    - entity: "IfcWasteTerminal"
-      predefined_type: "ROOFDRAIN"
+    - entity: "IfcRailing"
+    - entity: "IfcRamp"
+    - entity: "IfcRampFlight"
+    - entity: "IfcStair"
+    - entity: "IfcStairFlight"
+    - entity: "IfcBuildingElementProxy"
+    - entity: "IfcBuildingElementComponent"
+    - entity: "IfcPile"
   building_furniture:
-    - entity: "IfcTransportElement"
-      predefined_type: "ELEVETOR"
-    - entity: "IfcFurniture"
-      predefined_type: "NOTDEFINED"
-    - entity: "IfcFurniture"
-      predefined_type: "USERDEFINED"
-      object_type: "POSTALBOX"
-      properties:
-        - "Pset_FurnitureCommon.IsExternal"
+    - entity: "IfcFurnishingElement"
   building_room:
     - entity: "IfcSpace"
-      predefined_type: "SPACE"
-      properties:
-        - "Pset_SpaceCommon.IsExternal"
-        - "Pset_SpaceCommon.Reference"
-    - entity: "IfcSpace"
-      predefined_type: "GFA"
-      properties:
-        - "Pset_SpaceCommon.IsExternal"
-        - "Pset_SpaceCommon.Reference"
   door:
     - entity: "IfcDoor"
-      predefined_type: "DOOR"
-      properties:
-        - "Pset_DoorCommon.IsExternal"
   window:
     - entity: "IfcWindow"
-      predefined_type: "WINDOW"
-      properties:
-        - "Pset_WindowCommon.IsExternal"
-    - entity: "IfcWindow"
-      predefined_type: "SKYLIGHT"
-      properties:
-        - "Pset_WindowCommon.IsExternal"
 
+bridge_mapping:
+  bridge_constructive_element:
+    - entity: "IfcBeam"
+    - entity: "IfcColumn"
+    - entity: "IfcFooting"
+    - entity: "IfcMember"
+    - entity: "IfcPlate"
+    - entity: "IfcWall"
+    - entity: "IfcWallStandardCase"
+    - entity: "IfcRoof"
+    - entity: "IfcCurtainWall"
+    - entity: "IfcSlab"
+    - entity: "IfcCovering"
+  bridge_installation:
+    - entity: "IfcRailing"
+    - entity: "IfcRamp"
+    - entity: "IfcRampFlight"
+    - entity: "IfcStair"
+    - entity: "IfcStairFlight"
+    - entity: "IfcBuildingElementProxy"
+    - entity: "IfcBuildingElementComponent"
+    - entity: "IfcPile"
+  bridge_furniture:
+    - entity: "IfcFurnishingElement"
+  bridge_room:
+    - entity: "IfcSpace"
+  door:
+    - entity: "IfcDoor"
+  window:
+    - entity: "IfcWindow"
+
+other_construction_mapping:
+  - entity: "IfcDistributionFlowElement"
 
 generic_mapping:
-  - entity: "IfcGeographicElement"
-    properties:
-      - "PSet_GeoRef.Name"
-      - "PSet_GeoRef.LocalX"
-      - "PSet_GeoRef.LocalY"
-      - "PSet_GeoRef.LocalZ"
-      - "PSet_GeoRef.Eastings"
-      - "PSet_GeoRef.Northings"
-      - "PSet_GeoRef.OrthogonalHeight"
+  - entity: "IfcSpace"
 
 # Example configuration with predefined type, object type, properties and attributes
 #
